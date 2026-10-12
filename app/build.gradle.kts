@@ -5,7 +5,9 @@ plugins {
 
 android {
     namespace = "com.aistudy.aistudy"
-    compileSdk = 36
+    compileSdk {
+        version = release(37)
+    }
 
     defaultConfig {
         applicationId = "com.aistudy.aistudy"
