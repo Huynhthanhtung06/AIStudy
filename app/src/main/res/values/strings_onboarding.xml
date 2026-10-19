@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onboarding_step_level_title">What level are you studying at?</string>
+    <string name="onboarding_step_level_subtitle">We will adjust answer difficulty for you.</string>
+
+    <string name="onboarding_step_subjects_title">Subjects you care about</string>
+    <string name="onboarding_step_subjects_subtitle">Pick at least one — you can change later.</string>
+
+    <string name="onboarding_step_style_title">How do you like explanations?</string>
+    <string name="onboarding_step_style_subtitle">AI will answer in the style you choose.</string>
+
+    <string name="onboarding_level_junior">Middle school</string>
+    <string name="onboarding_level_junior_hint">Grades 6 – 9</string>
+    <string name="onboarding_level_high">High school</string>
+    <string name="onboarding_level_high_hint">Grades 10 – 12</string>
+    <string name="onboarding_level_uni">University</string>
+    <string name="onboarding_level_uni_hint">College student</string>
+
+    <string name="onboarding_subject_math">Math</string>
+    <string name="onboarding_subject_science">Science</string>
+    <string name="onboarding_subject_code">Programming</string>
+    <string name="onboarding_subject_history">History</string>
+    <string name="onboarding_subject_language">Language</string>
+    <string name="onboarding_subject_other">Other</string>
+
+    <string name="onboarding_style_short">Concise</string>
+    <string name="onboarding_style_short_hint">Quick answer, fewer words</string>
+    <string name="onboarding_style_stepwise">Step by step</string>
+    <string name="onboarding_style_stepwise_hint">Clear steps, one idea each</string>
+    <string name="onboarding_style_detailed">Detailed</string>
+    <string name="onboarding_style_detailed_hint">In-depth with examples</string>
+
+    <string name="onboarding_back">Back</string>
+    <string name="onboarding_continue">Continue</string>
+    <string name="onboarding_finish">Start learning</string>
+    <string name="onboarding_pick_subject">Pick at least one subject.</string>
+</resources>

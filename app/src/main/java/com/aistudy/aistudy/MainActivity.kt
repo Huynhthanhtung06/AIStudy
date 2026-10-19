@@ -9,8 +9,11 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.aistudy.aistudy.ask.AskFragment
 import com.aistudy.aistudy.auth.LoginActivity
+import com.aistudy.aistudy.database.AppDatabase
+import com.aistudy.aistudy.database.ProfileDefaults
 import com.aistudy.aistudy.history.HistoryFragment
 import com.aistudy.aistudy.home.HomeFragment
+import com.aistudy.aistudy.onboarding.OnboardingActivity
 import com.aistudy.aistudy.progress.ProgressFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -23,6 +26,14 @@ class MainActivity : AppCompatActivity() {
             .getLong(LoginActivity.KEY_USER_ID, -1)
         if (userId == -1L) {
             startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+            return
+        }
+
+        ProfileDefaults.ensureExists(AppDatabase.getInstance(this).profileDao(), userId)
+        val profile = AppDatabase.getInstance(this).profileDao().getByUserId(userId)
+        if (profile != null && !profile.onboarded) {
+            startActivity(Intent(this, OnboardingActivity::class.java))
             finish()
             return
         }

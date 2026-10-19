@@ -7,14 +7,17 @@ import androidx.room.RoomDatabase
 
 @Database(
     entities = [
-        User::class
+        User::class,
+        Profile::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
+
+    abstract fun profileDao(): ProfileDao
 
     companion object {
 

@@ -14,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.aistudy.aistudy.MainActivity
 import com.aistudy.aistudy.R
 import com.aistudy.aistudy.database.AppDatabase
+import com.aistudy.aistudy.database.ProfileDefaults
 
 class LoginActivity : AppCompatActivity() {
 
@@ -80,6 +81,8 @@ class LoginActivity : AppCompatActivity() {
             .edit()
             .putLong(KEY_USER_ID, user.id)
             .apply()
+
+        ProfileDefaults.ensureExists(AppDatabase.getInstance(this).profileDao(), user.id)
 
         startActivity(Intent(this, MainActivity::class.java))
         finish()
