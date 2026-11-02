@@ -13,4 +13,7 @@ interface UserDao {
 
     @Query("SELECT * FROM users WHERE email = :email LIMIT 1")
     fun findByEmail(email: String): User?
+
+    @Query("SELECT * FROM users WHERE id = :id LIMIT 1")
+    fun getById(id: Long): User?
 }
