@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="history_title">Library</string>
+    <string name="history_search_hint">Search questions…</string>
+    <string name="history_chip_all">All</string>
+    <string name="history_chip_starred">★ Saved</string>
+    <string name="history_empty">No questions yet. Ask AI to get started!</string>
+    <string name="history_just_now">Just now</string>
+    <string name="history_hours_ago">%d h ago</string>
+    <string name="history_days_ago">%d d ago</string>
+    <string name="history_star">★</string>
+</resources>
