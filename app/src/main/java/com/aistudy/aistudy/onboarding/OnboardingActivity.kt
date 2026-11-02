@@ -168,16 +168,16 @@ class OnboardingActivity : AppCompatActivity() {
     }
 
     private fun setupSubjectChoices() {
-        choiceSubjectMath.setOnClickListener { toggleSubject(ProfileDefaults.SUBJECT_MATH, choiceSubjectMath) }
-        choiceSubjectScience.setOnClickListener { toggleSubject(ProfileDefaults.SUBJECT_SCIENCE, choiceSubjectScience) }
-        choiceSubjectCode.setOnClickListener { toggleSubject(ProfileDefaults.SUBJECT_CODE, choiceSubjectCode) }
-        choiceSubjectHistory.setOnClickListener { toggleSubject(ProfileDefaults.SUBJECT_HISTORY, choiceSubjectHistory) }
-        choiceSubjectLanguage.setOnClickListener { toggleSubject(ProfileDefaults.SUBJECT_LANGUAGE, choiceSubjectLanguage) }
-        choiceSubjectOther.setOnClickListener { toggleSubject(ProfileDefaults.SUBJECT_OTHER, choiceSubjectOther) }
+        choiceSubjectMath.setOnClickListener { toggleSubject(ProfileDefaults.SUBJECT_MATH) }
+        choiceSubjectScience.setOnClickListener { toggleSubject(ProfileDefaults.SUBJECT_SCIENCE) }
+        choiceSubjectCode.setOnClickListener { toggleSubject(ProfileDefaults.SUBJECT_CODE) }
+        choiceSubjectHistory.setOnClickListener { toggleSubject(ProfileDefaults.SUBJECT_HISTORY) }
+        choiceSubjectLanguage.setOnClickListener { toggleSubject(ProfileDefaults.SUBJECT_LANGUAGE) }
+        choiceSubjectOther.setOnClickListener { toggleSubject(ProfileDefaults.SUBJECT_OTHER) }
         refreshSubjectUi()
     }
 
-    private fun toggleSubject(subject: String, view: TextView) {
+    private fun toggleSubject(subject: String) {
         if (subject in selectedSubjects) {
             selectedSubjects.remove(subject)
         } else {
