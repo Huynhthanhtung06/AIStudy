@@ -8,4 +8,18 @@
     <string name="home_greeting">Hi, %1$s</string>
     <string name="home_subtitle">What should we learn today?</string>
     <string name="home_ask_cta">Ask a question</string>
+    <string name="home_recent_title">Recent question</string>
+    <string name="home_view_all">View all</string>
+    <string name="home_subjects_title">Subjects</string>
+    <string name="home_subject_count">%d questions</string>
+    <string name="home_subject_math_icon">∑</string>
+    <string name="home_subject_science_icon">🔬</string>
+    <string name="home_subject_code_icon">{ }</string>
+    <string name="home_subject_history_icon">⌛</string>
+    <string name="subject_math">Math</string>
+    <string name="subject_science">Science</string>
+    <string name="subject_code">Programming</string>
+    <string name="subject_history">History</string>
+    <string name="subject_language">Language</string>
+    <string name="subject_other">Other</string>
 </resources>
