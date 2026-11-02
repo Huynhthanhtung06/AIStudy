@@ -8,9 +8,10 @@ import androidx.room.RoomDatabase
 @Database(
     entities = [
         User::class,
-        Profile::class
+        Profile::class,
+        QuestionAnswer::class
     ],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -18,6 +19,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
 
     abstract fun profileDao(): ProfileDao
+
+    abstract fun questionAnswerDao(): QuestionAnswerDao
 
     companion object {
 
