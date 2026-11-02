@@ -1,4 +1,22 @@
 <resources>
     <string name="app_name">AIStudy</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="ask_title">Ask AI Mentor</string>
+    <string name="ask_hint">Type your study question here...</string>
+    <string name="ask_send">Send</string>
+    <string name="ask_sending">Thinking...</string>
+    <string name="ask_suggestions_label">Sample Questions:</string>
+    <string name="ask_suggestion_1">How to solve x² - 5x + 6 = 0?</string>
+    <string name="ask_suggestion_2">Explain photosynthesis simply.</string>
+    <string name="ask_suggestion_3">What is recursion in coding?</string>
+    <string name="ask_suggestion_4">What caused World War I?</string>
+    <string name="ask_error_empty">Please enter a question.</string>
+    <string name="ask_error_api_key">GEMINI_API_KEY is not set in local.properties.</string>
+    <string name="ask_error_failed">Could not get AI response. Please try again.</string>
+
+    <string name="answer_title">Answer</string>
+    <string name="answer_final">Final Answer</string>
+    <string name="answer_steps">Explanation Steps</string>
+    <string name="answer_not_found">Answer not found.</string>
 </resources>
