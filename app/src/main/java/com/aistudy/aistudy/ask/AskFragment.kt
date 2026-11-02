@@ -38,36 +38,29 @@ class AskFragment : Fragment() {
         }
 
         private fun buildPrompt(question: String, level: String?, style: String?): String {
-            val levelDesc = when (level) {
-                "junior" -> "Middle school (Grades 6-9)"
-                "uni" -> "University / College"
-                else -> "High school (Grades 10-12)"
+            val levelText = when (level) {
+                "junior" -> "middle school student (Grades 6-9)"
+                "uni" -> "university student"
+                else -> "high school student (Grades 10-12)"
             }
-            val styleDesc = when (style) {
-                "short" -> "Concise, quick answer with fewer words"
-                "detailed" -> "In-depth with examples and thorough explanations"
-                else -> "Step by step, clear steps with one main idea each"
+            val styleText = when (style) {
+                "short" -> "Give a concise, quick answer with fewer words."
+                "detailed" -> "Give an in-depth answer with examples and thorough explanations."
+                else -> "Give a step by step explanation, with clear steps and one main idea each."
             }
-            return """
-                You are an expert AI study mentor. Answer the student's question adhering strictly to:
-                - Student Level: $levelDesc
-                - Explanation Style: $styleDesc
-
-                Question: "$question"
-
-                You MUST return ONLY a valid JSON object with the following structure, and NO markdown code block formatting (do not wrap in ```json ... ```, just raw JSON string):
-                {
-                  "subject": "math|science|code|history|language|other",
-                  "steps": [
-                    {
-                      "title": "Step title",
-                      "body": "Detailed explanation body",
-                      "expr": "Optional formula or short expression"
-                    }
-                  ],
-                  "finalAnswer": "Summary of final answer"
-                }
-            """.trimIndent()
+            return "You are AI Study Mentor, a study tutor in English for a $levelText.\n" +
+                styleText + "\n" +
+                "Always answer in English. Put math formulas in the \"expr\" field of the matching step.\n" +
+                "Classify the subject correctly (math/science/code/history/language/other).\n" +
+                "Also rate difficulty as easy, medium, or hard for this student.\n\n" +
+                "Return ONLY valid JSON (no markdown) with this structure:\n" +
+                "{\n" +
+                "  \"subject\": \"math|science|code|history|language|other\",\n" +
+                "  \"difficulty\": \"easy|medium|hard\",\n" +
+                "  \"steps\": [{\"title\": \"optional\", \"body\": \"required\", \"expr\": \"optional\"}],\n" +
+                "  \"finalAnswer\": \"string\"\n" +
+                "}\n\n" +
+                "Question: " + question
         }
 
         private fun extractJson(raw: String): String {
@@ -81,6 +74,21 @@ class AskFragment : Fragment() {
                 text = text.removeSuffix("```").trim()
             }
             return text
+        }
+
+        private fun isValidSubject(subject: String): Boolean {
+            return subject == "math" ||
+                subject == "science" ||
+                subject == "code" ||
+                subject == "history" ||
+                subject == "language" ||
+                subject == "other"
+        }
+
+        private fun isValidDifficulty(difficulty: String): Boolean {
+            return difficulty == "easy" ||
+                difficulty == "medium" ||
+                difficulty == "hard"
         }
     }
 
@@ -166,9 +174,25 @@ class AskFragment : Fragment() {
                 val jsonText = extractJson(rawResponse)
                 val jsonObj = JSONObject(jsonText)
 
-                val subject = jsonObj.optString("subject", "other")
+                var subject = jsonObj.optString("subject", "other")
+                if (!isValidSubject(subject)) {
+                    Log.w(TAG, "invalid subject from AI: $subject, fallback to other")
+                    subject = "other"
+                }
+
+                var difficulty = jsonObj.optString("difficulty", "medium")
+                if (!isValidDifficulty(difficulty)) {
+                    difficulty = "medium"
+                }
+
                 val stepsArray = jsonObj.optJSONArray("steps") ?: JSONArray()
                 val finalAnswer = jsonObj.optString("finalAnswer", "")
+
+                Log.d(
+                    TAG, "parsed subject=$subject difficulty=$difficulty" +
+                        " steps=${stepsArray.length()}" +
+                        " finalAnswerLength=${finalAnswer.length}"
+                )
 
                 val qa = QuestionAnswer().apply {
                     this.userId = userId
@@ -177,6 +201,9 @@ class AskFragment : Fragment() {
                     this.steps = stepsArray.toString()
                     this.finalAnswer = finalAnswer
                     this.createdAt = System.currentTimeMillis()
+                    this.difficulty = difficulty
+                    this.extrasJson = null
+                    this.reviewedAt = 0
                 }
 
                 val qaId = db.questionAnswerDao().insert(qa)

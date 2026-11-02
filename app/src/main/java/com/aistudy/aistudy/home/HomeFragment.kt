@@ -43,6 +43,7 @@ class HomeFragment : Fragment() {
     private lateinit var tvCountScience: TextView
     private lateinit var tvCountCode: TextView
     private lateinit var tvCountHistory: TextView
+    private lateinit var tvCountLanguage: TextView
 
     private var latestQaId = -1L
 
@@ -74,6 +75,7 @@ class HomeFragment : Fragment() {
         tvCountScience = view.findViewById(R.id.tv_count_science)
         tvCountCode = view.findViewById(R.id.tv_count_code)
         tvCountHistory = view.findViewById(R.id.tv_count_history)
+        tvCountLanguage = view.findViewById(R.id.tv_count_language)
 
         btnAsk.setOnClickListener { selectTab(R.id.nav_ask) }
         tvViewAll.setOnClickListener { selectTab(R.id.nav_history) }
@@ -136,6 +138,7 @@ class HomeFragment : Fragment() {
         tvCountScience.text = getString(R.string.home_subject_count, qaDao.countBySubject(userId, "science"))
         tvCountCode.text = getString(R.string.home_subject_count, qaDao.countBySubject(userId, "code"))
         tvCountHistory.text = getString(R.string.home_subject_count, qaDao.countBySubject(userId, "history"))
+        tvCountLanguage.text = getString(R.string.home_subject_count, qaDao.countBySubject(userId, "language"))
     }
 
     private fun selectTab(menuItemId: Int) {

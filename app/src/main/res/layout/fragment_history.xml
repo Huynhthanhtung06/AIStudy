@@ -117,6 +117,21 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/chip_language"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_history_chip"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:text="@string/subject_language"
+                android:textColor="@color/auth_foreground"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
                 android:id="@+id/chip_starred"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
