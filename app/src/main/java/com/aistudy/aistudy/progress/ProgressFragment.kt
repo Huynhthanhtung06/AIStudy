@@ -1,6 +1,7 @@
 package com.aistudy.aistudy.progress
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +20,9 @@ class ProgressFragment : Fragment() {
     companion object {
         private const val XP_MAX = 1200
     }
+
+    private lateinit var tvUserEmail: TextView
+    private lateinit var btnLogout: TextView
 
     private lateinit var tvXpTotal: TextView
     private lateinit var tvLevel: TextView
@@ -62,6 +66,9 @@ class ProgressFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        tvUserEmail = view.findViewById(R.id.tv_user_email)
+        btnLogout = view.findViewById(R.id.btn_logout)
+
         tvXpTotal = view.findViewById(R.id.tv_xp_total)
         tvLevel = view.findViewById(R.id.tv_level)
         tvXpPercent = view.findViewById(R.id.tv_xp_percent)
@@ -92,11 +99,28 @@ class ProgressFragment : Fragment() {
         badgeWeek = view.findViewById(R.id.badge_week)
         badgeMath = view.findViewById(R.id.badge_math)
         badgeScholar = view.findViewById(R.id.badge_scholar)
+
+        btnLogout.setOnClickListener { logout() }
     }
 
     override fun onResume() {
         super.onResume()
         loadProgress()
+    }
+
+    private fun logout() {
+        if (context == null) {
+            return
+        }
+        requireContext()
+            .getSharedPreferences(LoginActivity.PREFS_AUTH, Context.MODE_PRIVATE)
+            .edit()
+            .remove(LoginActivity.KEY_USER_ID)
+            .apply()
+
+        val intent = Intent(requireContext(), LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 
     private fun loadProgress() {
@@ -107,8 +131,11 @@ class ProgressFragment : Fragment() {
         if (userId == -1L) return
 
         val db = AppDatabase.getInstance(requireContext())
+        val user = db.userDao().getById(userId)
         val profile = db.profileDao().getByUserId(userId)
         val qaDao = db.questionAnswerDao()
+
+        tvUserEmail.text = user?.email ?: ""
 
         val xp = profile?.xp ?: 0
         val streak = profile?.streak ?: 0

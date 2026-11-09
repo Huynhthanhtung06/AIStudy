@@ -14,9 +14,24 @@
     <string name="ask_error_empty">Please enter a question.</string>
     <string name="ask_error_api_key">GEMINI_API_KEY is not set in local.properties.</string>
     <string name="ask_error_failed">Could not get AI response. Please try again.</string>
+    <string name="ask_no_api_key">GEMINI_API_KEY is not set in local.properties.</string>
 
     <string name="answer_title">Answer</string>
     <string name="answer_final">Final Answer</string>
     <string name="answer_steps">Explanation Steps</string>
     <string name="answer_not_found">Answer not found.</string>
+    <string name="answer_difficulty_easy">Easy</string>
+    <string name="answer_difficulty_medium">Medium</string>
+    <string name="answer_difficulty_hard">Hard</string>
+    <string name="answer_action_simplify">Simplify</string>
+    <string name="answer_action_alternative">Alternative</string>
+    <string name="answer_action_concepts">Concepts</string>
+    <string name="answer_action_mistakes">Mistakes</string>
+    <string name="answer_action_followups">Follow-ups</string>
+    <string name="answer_extras_loading">Generating learning tips…</string>
+    <string name="answer_extras_error">Could not generate tips. Try again.</string>
+    <string name="answer_extras_empty">Tap an action above to get learning support.</string>
+    <string name="answer_mark_reviewed">Mark reviewed (+10 XP)</string>
+    <string name="answer_reviewed">Reviewed ✓</string>
+    <string name="answer_review_xp_toast">+10 XP for reviewing</string>
 </resources>
