@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/auth_surface"
@@ -18,9 +19,9 @@
     <EditText
         android:id="@+id/et_search"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="@dimen/auth_input_height"
         android:layout_marginTop="16dp"
-        android:autofillHints=""
+        android:autofillHints="none"
         android:background="@drawable/bg_auth_input"
         android:hint="@string/history_search_hint"
         android:inputType="text"
@@ -44,11 +45,11 @@
                 android:id="@+id/chip_all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="6dp"
                 android:background="@drawable/bg_history_chip_active"
                 android:clickable="true"
                 android:focusable="true"
-                android:paddingHorizontal="16dp"
+                android:paddingHorizontal="14dp"
                 android:paddingVertical="8dp"
                 android:text="@string/history_chip_all"
                 android:textColor="@color/auth_primary_foreground"
@@ -59,76 +60,57 @@
                 android:id="@+id/chip_math"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="6dp"
                 android:background="@drawable/bg_history_chip"
                 android:clickable="true"
                 android:focusable="true"
-                android:paddingHorizontal="16dp"
+                android:paddingHorizontal="14dp"
                 android:paddingVertical="8dp"
                 android:text="@string/subject_math"
                 android:textColor="@color/auth_foreground"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/chip_science"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="6dp"
                 android:background="@drawable/bg_history_chip"
                 android:clickable="true"
                 android:focusable="true"
-                android:paddingHorizontal="16dp"
+                android:paddingHorizontal="14dp"
                 android:paddingVertical="8dp"
                 android:text="@string/subject_science"
                 android:textColor="@color/auth_foreground"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/chip_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="6dp"
                 android:background="@drawable/bg_history_chip"
                 android:clickable="true"
                 android:focusable="true"
-                android:paddingHorizontal="16dp"
+                android:paddingHorizontal="14dp"
                 android:paddingVertical="8dp"
                 android:text="@string/subject_code"
                 android:textColor="@color/auth_foreground"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/chip_history"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="6dp"
                 android:background="@drawable/bg_history_chip"
                 android:clickable="true"
                 android:focusable="true"
-                android:paddingHorizontal="16dp"
+                android:paddingHorizontal="14dp"
                 android:paddingVertical="8dp"
                 android:text="@string/subject_history"
                 android:textColor="@color/auth_foreground"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/chip_language"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/bg_history_chip"
-                android:clickable="true"
-                android:focusable="true"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="8dp"
-                android:text="@string/subject_language"
-                android:textColor="@color/auth_foreground"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/chip_starred"
@@ -137,14 +119,23 @@
                 android:background="@drawable/bg_history_chip"
                 android:clickable="true"
                 android:focusable="true"
-                android:paddingHorizontal="16dp"
+                android:paddingHorizontal="14dp"
                 android:paddingVertical="8dp"
                 android:text="@string/history_chip_starred"
                 android:textColor="@color/auth_foreground"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                android:textSize="12sp" />
         </LinearLayout>
     </HorizontalScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_practice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/quiz_practice"
+        android:visibility="gone"
+        app:backgroundTint="@color/auth_brand"
+        app:cornerRadius="12dp" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -161,10 +152,11 @@
 
         <TextView
             android:id="@+id/tv_empty"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
+            android:padding="24dp"
             android:text="@string/history_empty"
             android:textColor="@color/auth_muted_foreground"
             android:textSize="14sp"

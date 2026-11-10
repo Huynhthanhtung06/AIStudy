@@ -9,20 +9,23 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.aistudy.aistudy.MainActivity
 import com.aistudy.aistudy.R
 import com.aistudy.aistudy.answer.AnswerActivity
 import com.aistudy.aistudy.auth.LoginActivity
 import com.aistudy.aistudy.database.AppDatabase
+import com.aistudy.aistudy.database.QuestionAnswerDao
+import com.aistudy.aistudy.quiz.QuizActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
-import kotlin.math.roundToInt
 
 class HomeFragment : Fragment() {
 
     companion object {
         private const val XP_MAX = 1200
+        private const val MIN_PRACTICE_QA = 2
     }
 
     private lateinit var tvLevelBadge: TextView
@@ -32,6 +35,7 @@ class HomeFragment : Fragment() {
     private lateinit var progressXp: ProgressBar
     private lateinit var tvGreeting: TextView
     private lateinit var btnAsk: MaterialButton
+    private lateinit var btnPracticeRecent: MaterialButton
 
     private lateinit var sectionRecent: LinearLayout
     private lateinit var tvViewAll: TextView
@@ -46,6 +50,9 @@ class HomeFragment : Fragment() {
     private lateinit var tvCountLanguage: TextView
 
     private var latestQaId = -1L
+    private var latestSubject: String? = null
+    private var currentUserId = -1L
+    private var qaDao: QuestionAnswerDao? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,6 +71,7 @@ class HomeFragment : Fragment() {
         progressXp = view.findViewById(R.id.progress_xp)
         tvGreeting = view.findViewById(R.id.tv_greeting)
         btnAsk = view.findViewById(R.id.btn_ask)
+        btnPracticeRecent = view.findViewById(R.id.btn_practice_recent)
 
         sectionRecent = view.findViewById(R.id.section_recent)
         tvViewAll = view.findViewById(R.id.tv_view_all)
@@ -78,6 +86,9 @@ class HomeFragment : Fragment() {
         tvCountLanguage = view.findViewById(R.id.tv_count_language)
 
         btnAsk.setOnClickListener { selectTab(R.id.nav_ask) }
+        btnPracticeRecent.setOnClickListener {
+            latestSubject?.let { openPractice(it) }
+        }
         tvViewAll.setOnClickListener { selectTab(R.id.nav_history) }
         cardRecent.setOnClickListener {
             if (latestQaId != -1L) {
@@ -86,6 +97,12 @@ class HomeFragment : Fragment() {
                 startActivity(intent)
             }
         }
+
+        view.findViewById<View>(R.id.card_subject_math).setOnClickListener { openPractice("math") }
+        view.findViewById<View>(R.id.card_subject_science).setOnClickListener { openPractice("science") }
+        view.findViewById<View>(R.id.card_subject_code).setOnClickListener { openPractice("code") }
+        view.findViewById<View>(R.id.card_subject_history).setOnClickListener { openPractice("history") }
+        view.findViewById<View>(R.id.card_subject_language).setOnClickListener { openPractice("language") }
     }
 
     override fun onResume() {
@@ -109,12 +126,14 @@ class HomeFragment : Fragment() {
         val user = db.userDao().getById(userId)
         val profile = db.profileDao().getByUserId(userId)
         val qaDao = db.questionAnswerDao()
+        this.qaDao = qaDao
+        currentUserId = userId
 
         val fullName = user?.fullName ?: ""
         val xp = profile?.xp ?: 0
         val streak = profile?.streak ?: 0
         val level = maxOf(1, xp / 100)
-        val xpPct = minOf(100, ((xp * 100f) / XP_MAX).roundToInt())
+        val xpPct = minOf(100, Math.round((xp * 100f) / XP_MAX))
 
         tvLevelBadge.text = level.toString()
         tvStreak.text = getString(R.string.home_streak_days, streak)
@@ -126,12 +145,22 @@ class HomeFragment : Fragment() {
         val latest = qaDao.getLatestByUserId(userId)
         if (latest != null) {
             latestQaId = latest.id
+            latestSubject = latest.subject
             sectionRecent.visibility = View.VISIBLE
             tvRecentQuestion.text = latest.question
             tvRecentSubject.text = subjectLabel(latest.subject)
+            val subjectCount = latest.subject?.let { qaDao.countBySubject(userId, it) } ?: 0
+            if (subjectCount >= MIN_PRACTICE_QA) {
+                btnPracticeRecent.visibility = View.VISIBLE
+                btnPracticeRecent.text = getString(R.string.quiz_practice_on, subjectLabel(latest.subject))
+            } else {
+                btnPracticeRecent.visibility = View.GONE
+            }
         } else {
             latestQaId = -1L
+            latestSubject = null
             sectionRecent.visibility = View.GONE
+            btnPracticeRecent.visibility = View.GONE
         }
 
         tvCountMath.text = getString(R.string.home_subject_count, qaDao.countBySubject(userId, "math"))
@@ -139,6 +168,21 @@ class HomeFragment : Fragment() {
         tvCountCode.text = getString(R.string.home_subject_count, qaDao.countBySubject(userId, "code"))
         tvCountHistory.text = getString(R.string.home_subject_count, qaDao.countBySubject(userId, "history"))
         tvCountLanguage.text = getString(R.string.home_subject_count, qaDao.countBySubject(userId, "language"))
+    }
+
+    private fun openPractice(subject: String) {
+        val dao = qaDao
+        if (context == null || dao == null || currentUserId == -1L) {
+            return
+        }
+        val count = dao.countBySubject(currentUserId, subject)
+        if (count < MIN_PRACTICE_QA) {
+            Toast.makeText(requireContext(), R.string.quiz_need_more, Toast.LENGTH_LONG).show()
+            return
+        }
+        val intent = Intent(requireContext(), QuizActivity::class.java)
+        intent.putExtra(QuizActivity.EXTRA_SUBJECT, subject)
+        startActivity(intent)
     }
 
     private fun selectTab(menuItemId: Int) {

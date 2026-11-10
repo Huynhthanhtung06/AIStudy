@@ -135,6 +135,16 @@
             app:backgroundTint="@color/auth_brand"
             app:cornerRadius="12dp" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_practice_recent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/quiz_practice"
+            android:visibility="gone"
+            app:backgroundTint="@color/auth_brand"
+            app:cornerRadius="12dp" />
+
         <LinearLayout
             android:id="@+id/section_recent"
             android:layout_width="match_parent"
@@ -239,6 +249,8 @@
                 android:layout_marginEnd="6dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_home_card"
+                android:clickable="true"
+                android:focusable="true"
                 android:orientation="vertical"
                 android:padding="16dp">
 
@@ -322,6 +334,8 @@
                 android:layout_marginEnd="6dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_home_card"
+                android:clickable="true"
+                android:focusable="true"
                 android:orientation="vertical"
                 android:padding="16dp">
 
@@ -360,6 +374,8 @@
                 android:layout_marginStart="6dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_home_card"
+                android:clickable="true"
+                android:focusable="true"
                 android:orientation="vertical"
                 android:padding="16dp">
 
