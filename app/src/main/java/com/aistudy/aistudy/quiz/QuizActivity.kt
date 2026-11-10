@@ -26,6 +26,7 @@ import com.aistudy.aistudy.database.QuizItem
 import com.aistudy.aistudy.database.QuizItemDao
 import com.aistudy.aistudy.database.QuizSession
 import com.aistudy.aistudy.database.QuizSessionDao
+import com.aistudy.aistudy.xp.XpRules
 import com.google.android.material.button.MaterialButton
 import org.json.JSONArray
 import org.json.JSONObject
@@ -40,7 +41,6 @@ class QuizActivity : AppCompatActivity() {
         private const val MIN_SOURCE_QA = 2
         private const val RECENT_LIMIT = 5
         private const val TARGET_ITEMS = 4
-        private const val XP_PER_CORRECT = 10
     }
 
     private lateinit var qaDao: QuestionAnswerDao
@@ -283,16 +283,16 @@ class QuizActivity : AppCompatActivity() {
 
     private fun finishQuiz() {
         val score = items.count { it.correct == true }
-        val xpGain = score * XP_PER_CORRECT
+        val xpGain = score * XpRules.QUIZ_CORRECT + XpRules.QUIZ_COMPLETE_BONUS
         session.score = score
         session.total = items.size
         session.completed = true
         sessionDao.update(session)
 
         val profile = profileDao.getByUserId(userId)
-        if (profile != null && xpGain > 0) {
-            profile.xp += xpGain
-            profileDao.update(profile)
+        if (profile != null) {
+            XpRules.recordDailyActivity(profile, profileDao)
+            XpRules.addXp(profile, profileDao, xpGain)
         }
 
         layoutQuiz.visibility = View.GONE

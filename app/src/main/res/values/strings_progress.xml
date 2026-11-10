@@ -14,8 +14,10 @@
     <string name="progress_subjects_empty">No data yet — ask your first question!</string>
     <string name="progress_badges_title">Badges</string>
     <string name="progress_badge_starter">Starter</string>
-    <string name="progress_badge_week">7-day streak</string>
-    <string name="progress_badge_math">Algebra basics</string>
+    <string name="progress_badge_stars">5 stars</string>
+    <string name="progress_badge_streak">3-day streak</string>
+    <string name="progress_badge_perfect">Quiz 100%%</string>
+    <string name="progress_badge_mastery">Subject mastery</string>
     <string name="progress_badge_scholar">Scholar 1k</string>
     <string name="progress_metrics_title">Learning metrics</string>
     <string name="progress_quiz_accuracy_label">Quiz accuracy</string>
@@ -32,4 +34,13 @@
     <string name="progress_review_title">Suggested review</string>
     <string name="progress_review_subtitle">Review: %1$s</string>
     <string name="progress_review_cta">Practice now</string>
+    <string name="progress_avatar_title">Avatar</string>
+    <string name="progress_theme_title">Theme</string>
+    <string name="progress_leaderboard_title">Weekly leaderboard</string>
+    <string name="progress_leaderboard_you">You</string>
+    <string name="progress_leaderboard_xp">%d XP</string>
+    <string name="progress_unlock_locked">Lv %d</string>
+    <string name="progress_unlock_toast">Reach level %1$d to unlock</string>
+    <string name="progress_theme_applied">Theme applied</string>
+    <string name="progress_force_notify">Checking learning reminders…</string>
 </resources>

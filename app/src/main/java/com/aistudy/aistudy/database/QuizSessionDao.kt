@@ -19,4 +19,10 @@ interface QuizSessionDao {
 
     @Query("SELECT * FROM quiz_sessions WHERE userId = :userId ORDER BY createdAt DESC")
     fun getAllByUserId(userId: Long): List<QuizSession>
+
+    @Query("SELECT COUNT(*) FROM quiz_sessions WHERE userId = :userId AND completed = 1 AND score = total AND total > 0")
+    fun countPerfectByUserId(userId: Long): Int
+
+    @Query("SELECT COUNT(*) FROM quiz_sessions WHERE userId = :userId AND completed = 1 AND createdAt >= :fromMs")
+    fun countCompletedSince(userId: Long, fromMs: Long): Int
 }
