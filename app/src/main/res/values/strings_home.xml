@@ -16,6 +16,7 @@
     <string name="home_subject_science_icon">🔬</string>
     <string name="home_subject_code_icon">{ }</string>
     <string name="home_subject_history_icon">⌛</string>
+    <string name="home_subject_language_icon">あ</string>
     <string name="subject_math">Math</string>
     <string name="subject_science">Science</string>
     <string name="subject_code">Programming</string>

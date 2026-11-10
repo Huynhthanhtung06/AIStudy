@@ -5,7 +5,7 @@
     <string name="ask_title">Ask AI Study Mentor</string>
     <string name="ask_hint">Ask a question (e.g. Solve x^2 - 5x + 6 = 0)</string>
     <string name="ask_send">Ask AI</string>
-    <string name="ask_sending">Thinking...</string>
+    <string name="ask_sending">Thinking…</string>
     <string name="ask_suggestions_header">Suggestions</string>
     <string name="ask_suggestion_1">Explain photosynthesis step by step</string>
     <string name="ask_suggestion_2">Solve quadratic equation x² - 5x + 6 = 0</string>
@@ -14,4 +14,21 @@
     <string name="answer_title">Answer</string>
     <string name="answer_final">Final Answer</string>
     <string name="answer_steps">Solution Steps</string>
+    <string name="answer_not_found">Question not found</string>
+    <string name="ask_no_api_key">GEMINI_API_KEY not set in local.properties</string>
+
+    <string name="answer_difficulty_easy">Easy</string>
+    <string name="answer_difficulty_medium">Medium</string>
+    <string name="answer_difficulty_hard">Hard</string>
+    <string name="answer_action_simplify">Simplify</string>
+    <string name="answer_action_alternative">Alternative</string>
+    <string name="answer_action_concepts">Concepts</string>
+    <string name="answer_action_mistakes">Mistakes</string>
+    <string name="answer_action_followups">Follow-ups</string>
+    <string name="answer_extras_loading">Generating learning tips…</string>
+    <string name="answer_extras_error">Could not generate tips. Try again.</string>
+    <string name="answer_extras_empty">Tap an action above to get learning support.</string>
+    <string name="answer_mark_reviewed">Mark reviewed (+10 XP)</string>
+    <string name="answer_reviewed">Reviewed ✓</string>
+    <string name="answer_review_xp_toast">+10 XP for reviewing</string>
 </resources>

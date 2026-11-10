@@ -23,6 +23,7 @@
         android:autofillHints=""
         android:background="@drawable/bg_auth_input"
         android:hint="@string/history_search_hint"
+        android:inputType="text"
         android:paddingHorizontal="14dp"
         android:textColor="@color/auth_foreground"
         android:textColorHint="@color/auth_muted_foreground"
@@ -110,6 +111,21 @@
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="8dp"
                 android:text="@string/subject_history"
+                android:textColor="@color/auth_foreground"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/chip_language"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_history_chip"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:text="@string/subject_language"
                 android:textColor="@color/auth_foreground"
                 android:textSize="12sp"
                 android:textStyle="bold" />

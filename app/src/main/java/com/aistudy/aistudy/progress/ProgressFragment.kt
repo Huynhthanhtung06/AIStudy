@@ -38,16 +38,19 @@ class ProgressFragment : Fragment() {
     private lateinit var rowScience: LinearLayout
     private lateinit var rowCode: LinearLayout
     private lateinit var rowHistory: LinearLayout
+    private lateinit var rowLanguage: LinearLayout
 
     private lateinit var tvBarCountMath: TextView
     private lateinit var tvBarCountScience: TextView
     private lateinit var tvBarCountCode: TextView
     private lateinit var tvBarCountHistory: TextView
+    private lateinit var tvBarCountLanguage: TextView
 
     private lateinit var barMath: ProgressBar
     private lateinit var barScience: ProgressBar
     private lateinit var barCode: ProgressBar
     private lateinit var barHistory: ProgressBar
+    private lateinit var barLanguage: ProgressBar
 
     private lateinit var badgeStarter: LinearLayout
     private lateinit var badgeWeek: LinearLayout
@@ -81,16 +84,19 @@ class ProgressFragment : Fragment() {
         rowScience = view.findViewById(R.id.row_science)
         rowCode = view.findViewById(R.id.row_code)
         rowHistory = view.findViewById(R.id.row_history)
+        rowLanguage = view.findViewById(R.id.row_language)
 
         tvBarCountMath = view.findViewById(R.id.tv_bar_count_math)
         tvBarCountScience = view.findViewById(R.id.tv_bar_count_science)
         tvBarCountCode = view.findViewById(R.id.tv_bar_count_code)
         tvBarCountHistory = view.findViewById(R.id.tv_bar_count_history)
+        tvBarCountLanguage = view.findViewById(R.id.tv_bar_count_language)
 
         barMath = view.findViewById(R.id.bar_math)
         barScience = view.findViewById(R.id.bar_science)
         barCode = view.findViewById(R.id.bar_code)
         barHistory = view.findViewById(R.id.bar_history)
+        barLanguage = view.findViewById(R.id.bar_language)
 
         badgeStarter = view.findViewById(R.id.badge_starter)
         badgeWeek = view.findViewById(R.id.badge_week)
@@ -156,14 +162,16 @@ class ProgressFragment : Fragment() {
         val countScience = qaDao.countBySubject(userId, "science")
         val countCode = qaDao.countBySubject(userId, "code")
         val countHistory = qaDao.countBySubject(userId, "history")
+        val countLanguage = qaDao.countBySubject(userId, "language")
 
-        val subjectTotal = countMath + countScience + countCode + countHistory
+        val subjectTotal = countMath + countScience + countCode + countHistory + countLanguage
         if (subjectTotal == 0) {
             tvSubjectsEmpty.visibility = View.VISIBLE
             rowMath.visibility = View.GONE
             rowScience.visibility = View.GONE
             rowCode.visibility = View.GONE
             rowHistory.visibility = View.GONE
+            rowLanguage.visibility = View.GONE
         } else {
             tvSubjectsEmpty.visibility = View.GONE
             val denom = if (subjectTotal > 0) subjectTotal else 1
@@ -171,6 +179,7 @@ class ProgressFragment : Fragment() {
             bindSubjectRow(rowScience, tvBarCountScience, barScience, countScience, denom)
             bindSubjectRow(rowCode, tvBarCountCode, barCode, countCode, denom)
             bindSubjectRow(rowHistory, tvBarCountHistory, barHistory, countHistory, denom)
+            bindSubjectRow(rowLanguage, tvBarCountLanguage, barLanguage, countLanguage, denom)
         }
 
         setBadge(badgeStarter, totalQuestions >= 1)
