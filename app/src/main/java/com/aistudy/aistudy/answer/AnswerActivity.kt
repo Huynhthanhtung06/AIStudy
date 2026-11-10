@@ -1,11 +1,14 @@
 package com.aistudy.aistudy.answer
 
+import android.content.Intent
+import android.graphics.BitmapFactory
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -22,9 +25,11 @@ import com.aistudy.aistudy.database.AppDatabase
 import com.aistudy.aistudy.database.ProfileDao
 import com.aistudy.aistudy.database.QuestionAnswer
 import com.aistudy.aistudy.database.QuestionAnswerDao
+import com.aistudy.aistudy.quiz.QuizActivity
 import com.google.android.material.button.MaterialButton
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.File
 import java.util.Calendar
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -40,6 +45,8 @@ class AnswerActivity : AppCompatActivity() {
         private const val KEY_CONCEPTS = "concepts"
         private const val KEY_MISTAKES = "mistakes"
         private const val KEY_FOLLOWUPS = "followUps"
+
+        private const val MAX_SESSION_SECONDS = 1800
 
         private fun isSameDay(a: Long, b: Long): Boolean {
             val ca = Calendar.getInstance()
@@ -68,6 +75,7 @@ class AnswerActivity : AppCompatActivity() {
 
     private var activeExtraKey: String? = null
     private var extrasLoading = false
+    private var reviewSessionStartMs: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,12 +122,30 @@ class AnswerActivity : AppCompatActivity() {
         tvExtras = findViewById(R.id.tv_extras)
         progressExtras = findViewById(R.id.progress_extras)
         btnMarkReviewed = findViewById(R.id.btn_mark_reviewed)
+        val btnPractice = findViewById<MaterialButton>(R.id.btn_practice)
 
         btnBack.setOnClickListener { finish() }
         tvSubject.text = subjectLabel(item.subject)
         tvQuestion.text = item.question
         tvFinalAnswer.text = item.finalAnswer
         tvDifficulty.text = difficultyLabel(item.difficulty)
+        btnPractice.text = getString(R.string.quiz_practice_on, subjectLabel(item.subject))
+        btnPractice.setOnClickListener {
+            val intent = Intent(this, QuizActivity::class.java)
+            intent.putExtra(QuizActivity.EXTRA_SUBJECT, item.subject)
+            startActivity(intent)
+        }
+
+        val layoutAnswerImage = findViewById<LinearLayout>(R.id.layout_answer_image)
+        val imgAnswer = findViewById<ImageView>(R.id.img_answer)
+        val imagePath = item.imagePath
+        if (!imagePath.isNullOrEmpty()) {
+            val imageFile = File(imagePath)
+            if (imageFile.exists()) {
+                imgAnswer.setImageBitmap(BitmapFactory.decodeFile(imageFile.absolutePath))
+                layoutAnswerImage.visibility = View.VISIBLE
+            }
+        }
 
         try {
             val steps = JSONArray(item.steps)
@@ -143,6 +169,36 @@ class AnswerActivity : AppCompatActivity() {
 
         refreshReviewButton()
         maybeAutoReview()
+        reviewSessionStartMs = System.currentTimeMillis()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        reviewSessionStartMs = System.currentTimeMillis()
+    }
+
+    override fun onPause() {
+        flushReviewSeconds()
+        super.onPause()
+    }
+
+    private fun flushReviewSeconds() {
+        val item = qa
+        val dao = qaDao
+        if (item == null || dao == null || reviewSessionStartMs <= 0) {
+            return
+        }
+        val elapsedMs = System.currentTimeMillis() - reviewSessionStartMs
+        reviewSessionStartMs = 0
+        var delta = (elapsedMs / 1000L).toInt()
+        if (delta <= 0) {
+            return
+        }
+        if (delta > MAX_SESSION_SECONDS) {
+            delta = MAX_SESSION_SECONDS
+        }
+        item.reviewedSeconds += delta
+        dao.addReviewedSeconds(item.id, delta)
     }
 
     private fun maybeAutoReview() {
@@ -412,6 +468,7 @@ class AnswerActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
+        flushReviewSeconds()
         executor?.shutdown()
         super.onDestroy()
     }

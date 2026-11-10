@@ -9,9 +9,11 @@ import androidx.room.RoomDatabase
     entities = [
         User::class,
         Profile::class,
-        QuestionAnswer::class
+        QuestionAnswer::class,
+        QuizSession::class,
+        QuizItem::class
     ],
-    version = 3,
+    version = 7,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {

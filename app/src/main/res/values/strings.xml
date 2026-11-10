@@ -31,4 +31,22 @@
     <string name="answer_mark_reviewed">Mark reviewed (+10 XP)</string>
     <string name="answer_reviewed">Reviewed ✓</string>
     <string name="answer_review_xp_toast">+10 XP for reviewing</string>
+
+    <string name="ask_camera">Camera</string>
+    <string name="ask_gallery">Gallery</string>
+    <string name="ask_remove_image">Remove</string>
+    <string name="ask_image_preview">Selected question image</string>
+    <string name="ask_empty_both">Enter a question or attach an image.</string>
+    <string name="ask_image_default_question">Please solve the problem shown in this image.</string>
+    <string name="ask_permission_camera">Camera permission is required to take a photo.</string>
+    <string name="ask_permission_gallery">Photo access is required to pick an image.</string>
+    <string name="ask_image_error">Could not load the selected image.</string>
+    <string name="answer_image_label">Attached image</string>
+
+    <string name="subject_math">Math</string>
+    <string name="subject_science">Science</string>
+    <string name="subject_code">Programming</string>
+    <string name="subject_history">History</string>
+    <string name="subject_language">Language</string>
+    <string name="subject_other">Other</string>
 </resources>

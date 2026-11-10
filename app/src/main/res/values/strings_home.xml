@@ -17,10 +17,7 @@
     <string name="home_subject_code_icon">{ }</string>
     <string name="home_subject_history_icon">⌛</string>
     <string name="home_subject_language_icon">あ</string>
-    <string name="subject_math">Math</string>
-    <string name="subject_science">Science</string>
-    <string name="subject_code">Programming</string>
-    <string name="subject_history">History</string>
-    <string name="subject_language">Language</string>
-    <string name="subject_other">Other</string>
+    <string name="home_review_title">Suggested review</string>
+    <string name="home_review_subtitle">Review: %1$s</string>
+    <string name="home_review_cta">Practice now</string>
 </resources>

@@ -4,115 +4,199 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/auth_surface"
+    android:clipToPadding="false"
     android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="24dp">
+        android:paddingHorizontal="@dimen/auth_screen_padding_horizontal"
+        android:paddingTop="28dp"
+        android:paddingBottom="24dp">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/ask_title"
             android:textColor="@color/auth_foreground"
-            android:textSize="22sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/edit_question"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_marginTop="16dp"
-            android:autofillHints=""
-            android:background="@drawable/bg_auth_input"
-            android:gravity="top|start"
-            android:hint="@string/ask_hint"
-            android:padding="14dp"
-            android:textColor="@color/auth_foreground"
-            android:textColorHint="@color/auth_muted_foreground"
-            android:textSize="14sp" />
-
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_home_card"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_send"
+            <EditText
+                android:id="@+id/edit_question"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:background="@drawable/bg_auth_button"
-                android:insetTop="0dp"
-                android:insetBottom="0dp"
-                android:text="@string/ask_send"
-                android:textAllCaps="false"
-                android:textColor="@color/auth_primary_foreground"
-                app:backgroundTint="@null"
-                app:cornerRadius="12dp" />
+                android:layout_height="120dp"
+                android:autofillHints=""
+                android:background="@null"
+                android:gravity="top|start"
+                android:hint="@string/ask_hint"
+                android:inputType="textMultiLine|textLongMessage"
+                android:textColor="@color/auth_foreground"
+                android:textColorHint="@color/auth_muted_foreground"
+                android:textSize="15sp" />
+
+            <LinearLayout
+                android:id="@+id/layout_image_preview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/img_preview"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/ask_image_preview"
+                    android:scaleType="centerCrop" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_remove_image"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="@string/ask_remove_image"
+                    android:textColor="@color/auth_muted_foreground" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_camera"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:text="@string/ask_camera"
+                    android:textColor="@color/auth_foreground"
+                    app:strokeColor="@color/auth_input_ring" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_gallery"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:text="@string/ask_gallery"
+                    android:textColor="@color/auth_foreground"
+                    app:strokeColor="@color/auth_input_ring" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_send"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ask_send"
+                    app:backgroundTint="@color/auth_brand"
+                    app:cornerRadius="24dp" />
+            </LinearLayout>
 
             <ProgressBar
                 android:id="@+id/progress_loading"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center"
-                android:indeterminateTint="@color/auth_primary_foreground"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="12dp"
                 android:visibility="gone" />
-        </FrameLayout>
+        </LinearLayout>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="28dp"
             android:text="@string/ask_suggestions_header"
-            android:textColor="@color/auth_foreground"
-            android:textSize="16sp"
+            android:textAllCaps="true"
+            android:textColor="@color/auth_muted_foreground"
+            android:textSize="11sp"
             android:textStyle="bold" />
 
-        <com.google.android.material.button.MaterialButton
+        <LinearLayout
             android:id="@+id/btn_suggestion_1"
-            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/ask_suggestion_1"
-            android:textAlignment="viewStart"
-            android:textAllCaps="false"
-            android:textColor="@color/auth_foreground" />
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_home_card"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="16dp">
 
-        <com.google.android.material.button.MaterialButton
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ask_suggestion_1"
+                android:textColor="@color/auth_foreground"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/btn_suggestion_2"
-            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@string/ask_suggestion_2"
-            android:textAlignment="viewStart"
-            android:textAllCaps="false"
-            android:textColor="@color/auth_foreground" />
+            android:background="@drawable/bg_home_card"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="16dp">
 
-        <com.google.android.material.button.MaterialButton
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ask_suggestion_2"
+                android:textColor="@color/auth_foreground"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/btn_suggestion_3"
-            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@string/ask_suggestion_3"
-            android:textAlignment="viewStart"
-            android:textAllCaps="false"
-            android:textColor="@color/auth_foreground" />
+            android:background="@drawable/bg_home_card"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="16dp">
 
-        <com.google.android.material.button.MaterialButton
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ask_suggestion_3"
+                android:textColor="@color/auth_foreground"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/btn_suggestion_4"
-            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@string/ask_suggestion_4"
-            android:textAlignment="viewStart"
-            android:textAllCaps="false"
-            android:textColor="@color/auth_foreground" />
+            android:background="@drawable/bg_home_card"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="16dp">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ask_suggestion_4"
+                android:textColor="@color/auth_foreground"
+                android:textSize="14sp" />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>
