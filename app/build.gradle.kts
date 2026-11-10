@@ -14,12 +14,16 @@ val geminiApiKey = localProperties.getProperty("GEMINI_API_KEY", "")
 
 android {
     namespace = "com.aistudy.aistudy"
-    compileSdk = 37
+    compileSdk {
+        version = release(36) {
+            minorApiLevel = 1
+        }
+    }
 
     defaultConfig {
         applicationId = "com.aistudy.aistudy"
         minSdk = 33
-        targetSdk = 37
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -55,6 +59,7 @@ dependencies {
     implementation(libs.recyclerview)
     implementation(libs.room.runtime)
     ksp(libs.room.compiler)
+    implementation(libs.work.runtime)
     testImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ext.junit)

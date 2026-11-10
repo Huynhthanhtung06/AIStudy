@@ -27,6 +27,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_progress_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/progress_title"
@@ -621,6 +622,57 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:text="@string/progress_avatar_title"
+            android:textAllCaps="true"
+            android:textColor="@color/auth_muted_foreground"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/row_avatars"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/progress_theme_title"
+            android:textAllCaps="true"
+            android:textColor="@color/auth_muted_foreground"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/row_themes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/progress_leaderboard_title"
+            android:textAllCaps="true"
+            android:textColor="@color/auth_muted_foreground"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/layout_leaderboard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="vertical" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:text="@string/progress_badges_title"
             android:textAllCaps="true"
             android:textColor="@color/auth_muted_foreground"
@@ -641,13 +693,13 @@
                 android:background="@drawable/bg_badge_locked"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="12dp">
+                android:padding="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="🏅"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -661,7 +713,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/badge_week"
+                android:id="@+id/badge_stars"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -669,27 +721,27 @@
                 android:background="@drawable/bg_badge_locked"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="12dp">
+                android:padding="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="🏅"
-                    android:textSize="20sp" />
+                    android:text="⭐"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:gravity="center"
-                    android:text="@string/progress_badge_week"
+                    android:text="@string/progress_badge_stars"
                     android:textColor="@color/auth_foreground"
                     android:textSize="10sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/badge_math"
+                android:id="@+id/badge_streak"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -697,20 +749,82 @@
                 android:background="@drawable/bg_badge_locked"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="12dp">
+                android:padding="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="🏅"
-                    android:textSize="20sp" />
+                    android:text="🔥"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:gravity="center"
-                    android:text="@string/progress_badge_math"
+                    android:text="@string/progress_badge_streak"
+                    android:textColor="@color/auth_foreground"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/badge_perfect"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_badge_locked"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="💯"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center"
+                    android:text="@string/progress_badge_perfect"
+                    android:textColor="@color/auth_foreground"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/badge_mastery"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_badge_locked"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="📚"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center"
+                    android:text="@string/progress_badge_mastery"
                     android:textColor="@color/auth_foreground"
                     android:textSize="10sp"
                     android:textStyle="bold" />
@@ -725,13 +839,13 @@
                 android:background="@drawable/bg_badge_locked"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="12dp">
+                android:padding="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="🏅"
-                    android:textSize="20sp" />
+                    android:text="🎓"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
