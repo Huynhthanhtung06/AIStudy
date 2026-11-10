@@ -98,22 +98,39 @@ class AskFragment : Fragment() {
             try {
                 val rawResponse = GeminiClient.ask(apiKey, prompt)
                 val jsonText = extractJson(rawResponse)
-                val jsonObj = JSONObject(jsonText)
+                val json = JSONObject(jsonText)
 
-                val subject = jsonObj.optString("subject", "other")
-                val stepsObj = jsonObj.optJSONArray("steps") ?: JSONArray()
-                val finalAnswer = jsonObj.optString("finalAnswer", "")
+                var subject = json.optString("subject", "other")
+                if (!isValidSubject(subject)) {
+                    Log.w(TAG, "invalid subject from AI: $subject, fallback to other")
+                    subject = "other"
+                }
 
-                Log.d(TAG, "parsed subject=$subject steps=${stepsObj.length()}")
+                var difficulty = json.optString("difficulty", "medium")
+                if (!isValidDifficulty(difficulty)) {
+                    difficulty = "medium"
+                }
+
+                val stepsArray = json.getJSONArray("steps")
+                val finalAnswer = json.getString("finalAnswer")
+
+                Log.d(
+                    TAG, "parsed subject=$subject difficulty=$difficulty" +
+                        " steps=${stepsArray.length()}" +
+                        " finalAnswerLength=${finalAnswer.length}"
+                )
 
                 val qa = QuestionAnswer().apply {
                     this.userId = userId
                     this.subject = subject
                     this.question = question
-                    this.steps = stepsObj.toString()
+                    this.steps = stepsArray.toString()
                     this.finalAnswer = finalAnswer
                     this.starred = false
                     this.createdAt = System.currentTimeMillis()
+                    this.difficulty = difficulty
+                    this.extrasJson = null
+                    this.reviewedAt = 0
                 }
 
                 val qaId = db.questionAnswerDao().insert(qa)
@@ -143,6 +160,21 @@ class AskFragment : Fragment() {
         }
     }
 
+    private fun isValidSubject(subject: String): Boolean {
+        return subject == "math" ||
+            subject == "science" ||
+            subject == "code" ||
+            subject == "history" ||
+            subject == "language" ||
+            subject == "other"
+    }
+
+    private fun isValidDifficulty(difficulty: String): Boolean {
+        return difficulty == "easy" ||
+            difficulty == "medium" ||
+            difficulty == "hard"
+    }
+
     private fun buildPrompt(question: String, level: String, style: String): String {
         val levelText = when (level) {
             "junior" -> "Middle school student"
@@ -155,26 +187,19 @@ class AskFragment : Fragment() {
             else -> "Clear steps, one idea each"
         }
 
-        return """
-            You are an AI study mentor.
-            Target student level: $levelText.
-            Explanation style: $styleText.
-            
-            Question: $question
-            
-            Return ONLY a valid JSON object with no markdown formatting (no ```json ... ```), structured exactly like this:
-            {
-              "subject": "math|science|code|history|language|other",
-              "steps": [
-                {
-                  "title": "Step 1 title",
-                  "body": "Explanation body",
-                  "expr": "Optional math expression or code snippet"
-                }
-              ],
-              "finalAnswer": "Final answer summary"
-            }
-        """.trimIndent()
+        return "You are AI Study Mentor, a study tutor in English for a $levelText.\n" +
+            styleText + "\n" +
+            "Always answer in English. Put math formulas in the \"expr\" field of the matching step.\n" +
+            "Classify the subject correctly (math/science/code/history/language/other).\n" +
+            "Also rate difficulty as easy, medium, or hard for this student.\n\n" +
+            "Return ONLY valid JSON (no markdown) with this structure:\n" +
+            "{\n" +
+            "  \"subject\": \"math|science|code|history|language|other\",\n" +
+            "  \"difficulty\": \"easy|medium|hard\",\n" +
+            "  \"steps\": [{\"title\": \"optional\", \"body\": \"required\", \"expr\": \"optional\"}],\n" +
+            "  \"finalAnswer\": \"string\"\n" +
+            "}\n\n" +
+            "Question: " + question
     }
 
     private fun extractJson(raw: String): String {

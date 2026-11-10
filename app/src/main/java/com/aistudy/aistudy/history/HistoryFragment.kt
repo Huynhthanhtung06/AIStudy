@@ -29,6 +29,7 @@ class HistoryFragment : Fragment() {
     private lateinit var chipScience: TextView
     private lateinit var chipCode: TextView
     private lateinit var chipHistory: TextView
+    private lateinit var chipLanguage: TextView
     private lateinit var chipStarred: TextView
     private lateinit var rvHistory: RecyclerView
     private lateinit var tvEmpty: TextView
@@ -57,6 +58,7 @@ class HistoryFragment : Fragment() {
         chipScience = view.findViewById(R.id.chip_science)
         chipCode = view.findViewById(R.id.chip_code)
         chipHistory = view.findViewById(R.id.chip_history)
+        chipLanguage = view.findViewById(R.id.chip_language)
         chipStarred = view.findViewById(R.id.chip_starred)
         rvHistory = view.findViewById(R.id.rv_history)
         tvEmpty = view.findViewById(R.id.tv_empty)
@@ -86,6 +88,7 @@ class HistoryFragment : Fragment() {
         chipScience.setOnClickListener { setFilter("science", false) }
         chipCode.setOnClickListener { setFilter("code", false) }
         chipHistory.setOnClickListener { setFilter("history", false) }
+        chipLanguage.setOnClickListener { setFilter("language", false) }
         chipStarred.setOnClickListener { setFilter("all", true) }
 
         etSearch.addTextChangedListener(object : TextWatcher {
@@ -135,6 +138,7 @@ class HistoryFragment : Fragment() {
         val isScience = subjectFilter == "science" && !starredOnly
         val isCode = subjectFilter == "code" && !starredOnly
         val isHistory = subjectFilter == "history" && !starredOnly
+        val isLanguage = subjectFilter == "language" && !starredOnly
         val isStarred = starredOnly
 
         setChipStyle(chipAll, isAll, activeBg, inactiveBg, activeText, inactiveText)
@@ -142,6 +146,7 @@ class HistoryFragment : Fragment() {
         setChipStyle(chipScience, isScience, activeBg, inactiveBg, activeText, inactiveText)
         setChipStyle(chipCode, isCode, activeBg, inactiveBg, activeText, inactiveText)
         setChipStyle(chipHistory, isHistory, activeBg, inactiveBg, activeText, inactiveText)
+        setChipStyle(chipLanguage, isLanguage, activeBg, inactiveBg, activeText, inactiveText)
         setChipStyle(chipStarred, isStarred, activeBg, inactiveBg, activeText, inactiveText)
     }
 
