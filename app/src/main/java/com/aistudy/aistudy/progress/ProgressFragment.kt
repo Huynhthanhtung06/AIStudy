@@ -22,6 +22,7 @@ import com.aistudy.aistudy.database.Profile
 import com.aistudy.aistudy.database.ProfileDao
 import com.aistudy.aistudy.database.QuestionAnswerDao
 import com.aistudy.aistudy.database.QuizItemDao
+import com.aistudy.aistudy.notify.NotificationScheduler
 import com.aistudy.aistudy.quiz.QuizActivity
 import com.aistudy.aistudy.xp.FriendSeeder
 import com.aistudy.aistudy.xp.UnlockCatalog
@@ -151,6 +152,11 @@ class ProgressFragment : Fragment() {
         badgeScholar = view.findViewById(R.id.badge_scholar)
 
         btnLogout.setOnClickListener { logout() }
+        view.findViewById<View>(R.id.tv_progress_title).setOnLongClickListener {
+            NotificationScheduler.enqueueNow(requireContext())
+            Toast.makeText(requireContext(), R.string.progress_force_notify, Toast.LENGTH_SHORT).show()
+            true
+        }
         cardReviewSuggest.setOnClickListener {
             reviewSubject?.let { openPractice(it) }
         }
