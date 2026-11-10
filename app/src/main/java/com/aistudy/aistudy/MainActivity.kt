@@ -2,6 +2,7 @@ package com.aistudy.aistudy
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -15,6 +16,8 @@ import com.aistudy.aistudy.history.HistoryFragment
 import com.aistudy.aistudy.home.HomeFragment
 import com.aistudy.aistudy.onboarding.OnboardingActivity
 import com.aistudy.aistudy.progress.ProgressFragment
+import com.aistudy.aistudy.xp.FriendSeeder
+import com.aistudy.aistudy.xp.UnlockCatalog
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -38,12 +41,20 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
+        FriendSeeder.ensureSeeded(AppDatabase.getInstance(this).friendDao(), userId)
+
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        if (profile != null) {
+            findViewById<View>(R.id.main).setBackgroundResource(
+                UnlockCatalog.backgroundColorRes(UnlockCatalog.normalizeThemeId(profile.themeId))
+            )
         }
 
         val bottomNav: BottomNavigationView = findViewById(R.id.bottom_nav)
