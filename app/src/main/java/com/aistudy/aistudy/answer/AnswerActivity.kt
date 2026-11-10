@@ -46,6 +46,8 @@ class AnswerActivity : AppCompatActivity() {
         private const val KEY_MISTAKES = "mistakes"
         private const val KEY_FOLLOWUPS = "followUps"
 
+        private const val MAX_SESSION_SECONDS = 1800
+
         private fun isSameDay(a: Long, b: Long): Boolean {
             val ca = Calendar.getInstance()
             ca.timeInMillis = a
@@ -69,11 +71,11 @@ class AnswerActivity : AppCompatActivity() {
     private lateinit var btnFollowups: TextView
     private lateinit var tvExtras: TextView
     private lateinit var progressExtras: ProgressBar
-    private lateinit var btnPractice: MaterialButton
     private lateinit var btnMarkReviewed: MaterialButton
 
     private var activeExtraKey: String? = null
     private var extrasLoading = false
+    private var reviewSessionStartMs: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -119,15 +121,14 @@ class AnswerActivity : AppCompatActivity() {
         btnFollowups = findViewById(R.id.btn_followups)
         tvExtras = findViewById(R.id.tv_extras)
         progressExtras = findViewById(R.id.progress_extras)
-        btnPractice = findViewById(R.id.btn_practice)
         btnMarkReviewed = findViewById(R.id.btn_mark_reviewed)
+        val btnPractice = findViewById<MaterialButton>(R.id.btn_practice)
 
         btnBack.setOnClickListener { finish() }
         tvSubject.text = subjectLabel(item.subject)
         tvQuestion.text = item.question
         tvFinalAnswer.text = item.finalAnswer
         tvDifficulty.text = difficultyLabel(item.difficulty)
-
         btnPractice.text = getString(R.string.quiz_practice_on, subjectLabel(item.subject))
         btnPractice.setOnClickListener {
             val intent = Intent(this, QuizActivity::class.java)
@@ -168,6 +169,36 @@ class AnswerActivity : AppCompatActivity() {
 
         refreshReviewButton()
         maybeAutoReview()
+        reviewSessionStartMs = System.currentTimeMillis()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        reviewSessionStartMs = System.currentTimeMillis()
+    }
+
+    override fun onPause() {
+        flushReviewSeconds()
+        super.onPause()
+    }
+
+    private fun flushReviewSeconds() {
+        val item = qa
+        val dao = qaDao
+        if (item == null || dao == null || reviewSessionStartMs <= 0) {
+            return
+        }
+        val elapsedMs = System.currentTimeMillis() - reviewSessionStartMs
+        reviewSessionStartMs = 0
+        var delta = (elapsedMs / 1000L).toInt()
+        if (delta <= 0) {
+            return
+        }
+        if (delta > MAX_SESSION_SECONDS) {
+            delta = MAX_SESSION_SECONDS
+        }
+        item.reviewedSeconds += delta
+        dao.addReviewedSeconds(item.id, delta)
     }
 
     private fun maybeAutoReview() {
@@ -437,6 +468,7 @@ class AnswerActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
+        flushReviewSeconds()
         executor?.shutdown()
         super.onDestroy()
     }

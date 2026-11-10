@@ -20,6 +20,7 @@ import com.aistudy.aistudy.database.QuestionAnswerDao
 import com.aistudy.aistudy.quiz.QuizActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
+import kotlin.math.roundToInt
 
 class HomeFragment : Fragment() {
 
@@ -37,6 +38,9 @@ class HomeFragment : Fragment() {
     private lateinit var btnAsk: MaterialButton
     private lateinit var btnPracticeRecent: MaterialButton
 
+    private lateinit var cardReviewSuggest: LinearLayout
+    private lateinit var tvReviewSubtitle: TextView
+
     private lateinit var sectionRecent: LinearLayout
     private lateinit var tvViewAll: TextView
     private lateinit var cardRecent: LinearLayout
@@ -51,6 +55,7 @@ class HomeFragment : Fragment() {
 
     private var latestQaId = -1L
     private var latestSubject: String? = null
+    private var reviewSubject: String? = null
     private var currentUserId = -1L
     private var qaDao: QuestionAnswerDao? = null
 
@@ -73,6 +78,9 @@ class HomeFragment : Fragment() {
         btnAsk = view.findViewById(R.id.btn_ask)
         btnPracticeRecent = view.findViewById(R.id.btn_practice_recent)
 
+        cardReviewSuggest = view.findViewById(R.id.card_review_suggest)
+        tvReviewSubtitle = view.findViewById(R.id.tv_review_subtitle)
+
         sectionRecent = view.findViewById(R.id.section_recent)
         tvViewAll = view.findViewById(R.id.tv_view_all)
         cardRecent = view.findViewById(R.id.card_recent)
@@ -88,6 +96,9 @@ class HomeFragment : Fragment() {
         btnAsk.setOnClickListener { selectTab(R.id.nav_ask) }
         btnPracticeRecent.setOnClickListener {
             latestSubject?.let { openPractice(it) }
+        }
+        cardReviewSuggest.setOnClickListener {
+            reviewSubject?.let { openPractice(it) }
         }
         tvViewAll.setOnClickListener { selectTab(R.id.nav_history) }
         cardRecent.setOnClickListener {
@@ -133,7 +144,7 @@ class HomeFragment : Fragment() {
         val xp = profile?.xp ?: 0
         val streak = profile?.streak ?: 0
         val level = maxOf(1, xp / 100)
-        val xpPct = minOf(100, Math.round((xp * 100f) / XP_MAX))
+        val xpPct = minOf(100, ((xp * 100f) / XP_MAX).roundToInt())
 
         tvLevelBadge.text = level.toString()
         tvStreak.text = getString(R.string.home_streak_days, streak)
@@ -161,6 +172,16 @@ class HomeFragment : Fragment() {
             latestSubject = null
             sectionRecent.visibility = View.GONE
             btnPracticeRecent.visibility = View.GONE
+        }
+
+        val topSubject = qaDao.getTopSubjectByUserId(userId)
+        if (topSubject != null && qaDao.countBySubject(userId, topSubject) >= MIN_PRACTICE_QA) {
+            reviewSubject = topSubject
+            tvReviewSubtitle.text = getString(R.string.home_review_subtitle, subjectLabel(topSubject))
+            cardReviewSuggest.visibility = View.VISIBLE
+        } else {
+            reviewSubject = null
+            cardReviewSuggest.visibility = View.GONE
         }
 
         tvCountMath.text = getString(R.string.home_subject_count, qaDao.countBySubject(userId, "math"))
