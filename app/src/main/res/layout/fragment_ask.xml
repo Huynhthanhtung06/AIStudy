@@ -37,23 +37,74 @@
             android:textColorHint="@color/auth_muted_foreground"
             android:textSize="14sp" />
 
+        <LinearLayout
+            android:id="@+id/layout_image_preview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/img_preview"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/ask_image_preview"
+                android:scaleType="centerCrop" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_remove_image"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="@string/ask_remove_image"
+                android:textColor="@color/auth_muted_foreground" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_camera"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:text="@string/ask_camera"
+                android:textColor="@color/auth_foreground"
+                app:strokeColor="@color/auth_input_ring" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_gallery"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:text="@string/ask_gallery"
+                android:textColor="@color/auth_foreground"
+                app:strokeColor="@color/auth_input_ring" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ask_send"
+                app:backgroundTint="@color/auth_brand"
+                app:cornerRadius="24dp" />
+        </LinearLayout>
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_send"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/auth_input_height"
-                android:background="@drawable/bg_auth_button"
-                android:insetTop="0dp"
-                android:insetBottom="0dp"
-                android:text="@string/ask_send"
-                android:textAllCaps="false"
-                android:textColor="@color/auth_primary_foreground"
-                app:backgroundTint="@null"
-                app:cornerRadius="@dimen/auth_input_radius" />
 
             <ProgressBar
                 android:id="@+id/progress_loading"

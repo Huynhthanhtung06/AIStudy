@@ -13,6 +13,15 @@
     <string name="ask_error_empty">Please enter a question.</string>
     <string name="ask_error_key">GEMINI_API_KEY is missing or invalid in local.properties.</string>
     <string name="ask_error_network">Could not get AI response. Please check your connection.</string>
+    <string name="ask_camera">Camera</string>
+    <string name="ask_gallery">Gallery</string>
+    <string name="ask_remove_image">Remove</string>
+    <string name="ask_image_preview">Selected question image</string>
+    <string name="ask_empty_both">Enter a question or attach an image.</string>
+    <string name="ask_image_default_question">Please solve the problem shown in this image.</string>
+    <string name="ask_permission_camera">Camera permission is required to take a photo.</string>
+    <string name="ask_permission_gallery">Photo access is required to pick an image.</string>
+    <string name="ask_image_error">Could not load the selected image.</string>
 
     <string name="answer_title">Solution</string>
     <string name="answer_final">Final Answer</string>
@@ -32,4 +41,5 @@
     <string name="answer_mark_reviewed">Mark reviewed (+10 XP)</string>
     <string name="answer_reviewed">Reviewed ✓</string>
     <string name="answer_review_xp_toast">+10 XP for reviewing</string>
+    <string name="answer_image_label">Attached image</string>
 </resources>
