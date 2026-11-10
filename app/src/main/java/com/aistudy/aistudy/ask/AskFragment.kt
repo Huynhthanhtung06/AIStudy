@@ -29,6 +29,7 @@ import com.aistudy.aistudy.auth.LoginActivity
 import com.aistudy.aistudy.database.AppDatabase
 import com.aistudy.aistudy.database.Profile
 import com.aistudy.aistudy.database.QuestionAnswer
+import com.aistudy.aistudy.xp.XpRules
 import com.google.android.material.button.MaterialButton
 import org.json.JSONArray
 import org.json.JSONObject
@@ -43,7 +44,6 @@ class AskFragment : Fragment() {
 
     companion object {
         private const val TAG = "AskFragment"
-        private const val XP_PER_QUESTION = 50
 
         private fun maskKey(key: String): String {
             return if (key.length > 8) "${key.substring(0, 4)}...${key.substring(key.length - 4)}" else "***"
@@ -446,8 +446,11 @@ class AskFragment : Fragment() {
                 }
 
                 val qaId = db.questionAnswerDao().insert(qa)
-                profile.xp += XP_PER_QUESTION
-                db.profileDao().update(profile)
+                if (profile != null) {
+                    XpRules.recordDailyActivity(profile, db.profileDao())
+                    XpRules.addXp(profile, db.profileDao(), XpRules.ASK)
+                    Log.d(TAG, "xp updated to ${profile.xp}")
+                }
 
                 Log.d(TAG, "saved qaId=$qaId imagePath=$imagePath")
 
