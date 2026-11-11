@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_level_label">Current level</string>
+    <string name="home_scholar">Scholar</string>
+    <string name="home_streak_days">%d days</string>
+    <string name="home_xp_progress">%1$d / %2$d XP</string>
+    <string name="home_xp_percent">%d%%</string>
+    <string name="home_greeting">Hi, %1$s</string>
+    <string name="home_subtitle">What should we learn today?</string>
+    <string name="home_ask_cta">Ask a question</string>
+</resources>
