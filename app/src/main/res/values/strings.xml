@@ -1,4 +1,24 @@
 <resources>
     <string name="app_name">AIStudy</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="ask_title">Ask AI Mentor</string>
+    <string name="ask_subtitle">Get instant step-by-step solutions for any subject</string>
+    <string name="ask_hint">Type your question here…</string>
+    <string name="ask_send">Ask Question</string>
+    <string name="ask_sending">Thinking…</string>
+    <string name="ask_suggestions_title">Suggested Questions</string>
+
+    <string name="ask_suggestion_1">Solve x² - 5x + 6 = 0</string>
+    <string name="ask_suggestion_2">Explain photosynthesis simply</string>
+    <string name="ask_suggestion_3">How does quicksort algorithm work?</string>
+    <string name="ask_suggestion_4">Summary of the Industrial Revolution</string>
+
+    <string name="ask_error_empty">Please enter a question.</string>
+    <string name="ask_error_api_key">GEMINI_API_KEY is missing or invalid. Please check local.properties.</string>
+    <string name="ask_error_failed">Failed to get response from AI. Please try again.</string>
+
+    <string name="answer_title">Solution</string>
+    <string name="answer_final_answer">Final Answer</string>
+    <string name="answer_error_not_found">Question answer not found.</string>
 </resources>
