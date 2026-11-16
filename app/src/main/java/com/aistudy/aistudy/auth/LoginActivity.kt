@@ -72,7 +72,7 @@ class LoginActivity : AppCompatActivity() {
         val userDao = AppDatabase.getInstance(this).userDao()
         val user = userDao.findByEmail(email)
 
-        if (user == null || password != user.password) {
+        if (user == null || !PasswordHasher.matches(password, user.password)) {
             Toast.makeText(this, R.string.auth_error_invalid_credentials, Toast.LENGTH_SHORT).show()
             return
         }

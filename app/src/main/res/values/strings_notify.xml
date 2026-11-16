@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notify_channel_name">Learning reminders</string>
+    <string name="notify_channel_desc">Bookmarks, mistakes, motivation, and weekly summary</string>
+    <string name="notify_bookmark_title">Review a bookmarked answer</string>
+    <string name="notify_bookmark_body">You starred an answer more than 48 hours ago. Tap to review it.</string>
+    <string name="notify_mistakes_title">Repeated mistakes</string>
+    <string name="notify_mistakes_body">You missed several %1$s quiz items recently. Practice that subject.</string>
+    <string name="notify_motivational_title">Keep going</string>
+    <string name="notify_motivational_streak">Your %1$d-day streak is at risk — ask or review today!</string>
+    <string name="notify_motivational_level">Only %1$d XP left to reach level %2$d.</string>
+    <string name="notify_summary_daily_title">Daily learning summary</string>
+    <string name="notify_summary_weekly_title">Weekly learning summary</string>
+    <string name="notify_summary_body">Questions: %1$d · Quiz accuracy: %2$d%% · Weekly XP: %3$d</string>
+</resources>

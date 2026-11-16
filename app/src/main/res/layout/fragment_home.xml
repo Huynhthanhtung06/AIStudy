@@ -3,8 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/auth_surface"
-    android:clipToPadding="false"
     android:fillViewport="true">
 
     <LinearLayout
@@ -12,108 +10,114 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/auth_screen_padding_horizontal"
-        android:paddingTop="28dp"
+        android:paddingTop="20dp"
         android:paddingBottom="24dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:background="@drawable/bg_home_card"
+            android:orientation="vertical"
+            android:padding="20dp">
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/home_level_label"
-                    android:textAllCaps="true"
-                    android:textColor="@color/auth_muted_foreground"
-                    android:textSize="10sp"
+                    android:id="@+id/tv_level_badge"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/bg_auth_brand_icon"
+                    android:gravity="center"
+                    android:textColor="@color/auth_brand"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tv_level_badge"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:background="@drawable/bg_level_badge"
-                        android:gravity="center"
-                        android:textColor="@color/auth_brand"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
+                        android:text="@string/home_level_label"
+                        android:textColor="@color/auth_muted_foreground"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="@string/home_scholar"
                         android:textColor="@color/auth_foreground"
                         android:textSize="16sp"
                         android:textStyle="bold" />
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🔥 "
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_streak"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/streak"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_streak"
-                android:layout_width="wrap_content"
+            <ProgressBar
+                android:id="@+id/progress_xp"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_marginTop="16dp"
+                android:progressDrawable="@drawable/bg_xp_progress" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_streak_pill"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="6dp"
-                android:textColor="@color/streak"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                android:layout_marginTop="6dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_xp_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/auth_muted_foreground"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_xp_percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/auth_brand"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tv_xp_label"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/auth_muted_foreground"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_xp_percent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/auth_muted_foreground"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <ProgressBar
-            android:id="@+id/progress_xp"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="6dp"
-            android:layout_marginTop="8dp"
-            android:max="100"
-            android:progressDrawable="@drawable/bg_xp_progress" />
 
         <TextView
             android:id="@+id/tv_greeting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="24dp"
             android:textColor="@color/auth_foreground"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -121,7 +125,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:text="@string/home_subtitle"
             android:textColor="@color/auth_muted_foreground"
             android:textSize="14sp" />
@@ -135,11 +139,21 @@
             app:backgroundTint="@color/auth_brand"
             app:cornerRadius="12dp" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_practice_recent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/quiz_practice"
+            android:visibility="gone"
+            app:backgroundTint="@color/auth_brand"
+            app:cornerRadius="12dp" />
+
         <LinearLayout
             android:id="@+id/section_recent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="24dp"
             android:orientation="vertical"
             android:visibility="gone">
 
@@ -154,9 +168,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/home_recent_title"
-                    android:textAllCaps="true"
-                    android:textColor="@color/auth_muted_foreground"
-                    android:textSize="11sp"
+                    android:textColor="@color/auth_foreground"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -165,7 +178,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/home_view_all"
                     android:textColor="@color/auth_brand"
-                    android:textSize="12sp"
+                    android:textSize="13sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -175,8 +188,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:background="@drawable/bg_home_card"
-                android:clickable="true"
-                android:focusable="true"
                 android:orientation="vertical"
                 android:padding="16dp">
 
@@ -187,57 +198,45 @@
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:textColor="@color/auth_foreground"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/tv_recent_subject"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tv_recent_subject"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textColor="@color/auth_brand"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="›"
-                        android:textColor="@color/auth_muted_foreground"
-                        android:textSize="18sp" />
-                </LinearLayout>
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_auth_brand_icon"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="4dp"
+                    android:textColor="@color/auth_brand"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="24dp"
             android:text="@string/home_subjects_title"
-            android:textAllCaps="true"
-            android:textColor="@color/auth_muted_foreground"
-            android:textSize="11sp"
+            android:textColor="@color/auth_foreground"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
-        <LinearLayout
+        <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:orientation="horizontal">
+            android:columnCount="2">
 
             <LinearLayout
                 android:id="@+id/card_subject_math"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
                 android:layout_marginEnd="6dp"
-                android:layout_weight="1"
+                android:layout_marginBottom="12dp"
                 android:background="@drawable/bg_home_card"
                 android:orientation="vertical"
                 android:padding="16dp">
@@ -245,37 +244,38 @@
                 <TextView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:background="@drawable/bg_subject_icon"
+                    android:background="@drawable/bg_auth_brand_icon"
                     android:gravity="center"
                     android:text="@string/home_subject_math_icon"
                     android:textColor="@color/auth_brand"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:text="@string/subject_math"
                     android:textColor="@color/auth_foreground"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_count_math"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:textColor="@color/auth_muted_foreground"
-                    android:textSize="11sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/card_subject_science"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
                 android:layout_marginStart="6dp"
-                android:layout_weight="1"
+                android:layout_marginBottom="12dp"
                 android:background="@drawable/bg_home_card"
                 android:orientation="vertical"
                 android:padding="16dp">
@@ -283,44 +283,37 @@
                 <TextView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:background="@drawable/bg_subject_icon"
+                    android:background="@drawable/bg_auth_brand_icon"
                     android:gravity="center"
                     android:text="@string/home_subject_science_icon"
                     android:textColor="@color/auth_brand"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textSize="16sp" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:text="@string/subject_science"
                     android:textColor="@color/auth_foreground"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_count_science"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:textColor="@color/auth_muted_foreground"
-                    android:textSize="11sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@+id/card_subject_code"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
                 android:layout_marginEnd="6dp"
-                android:layout_weight="1"
+                android:layout_marginBottom="12dp"
                 android:background="@drawable/bg_home_card"
                 android:orientation="vertical"
                 android:padding="16dp">
@@ -328,7 +321,7 @@
                 <TextView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:background="@drawable/bg_subject_icon"
+                    android:background="@drawable/bg_auth_brand_icon"
                     android:gravity="center"
                     android:text="@string/home_subject_code_icon"
                     android:textColor="@color/auth_brand"
@@ -336,29 +329,30 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:text="@string/subject_code"
                     android:textColor="@color/auth_foreground"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_count_code"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:textColor="@color/auth_muted_foreground"
-                    android:textSize="11sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/card_subject_history"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
                 android:layout_marginStart="6dp"
-                android:layout_weight="1"
+                android:layout_marginBottom="12dp"
                 android:background="@drawable/bg_home_card"
                 android:orientation="vertical"
                 android:padding="16dp">
@@ -366,30 +360,67 @@
                 <TextView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:background="@drawable/bg_subject_icon"
+                    android:background="@drawable/bg_auth_brand_icon"
                     android:gravity="center"
                     android:text="@string/home_subject_history_icon"
                     android:textColor="@color/auth_brand"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textSize="16sp" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:text="@string/subject_history"
                     android:textColor="@color/auth_foreground"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_count_history"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:textColor="@color/auth_muted_foreground"
-                    android:textSize="11sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
-        </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/card_subject_language"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/bg_home_card"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/bg_auth_brand_icon"
+                    android:gravity="center"
+                    android:text="@string/home_subject_language_icon"
+                    android:textColor="@color/auth_brand"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/subject_language"
+                    android:textColor="@color/auth_foreground"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_count_language"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/auth_muted_foreground"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </GridLayout>
     </LinearLayout>
 </ScrollView>

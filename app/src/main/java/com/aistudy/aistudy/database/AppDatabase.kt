@@ -9,9 +9,12 @@ import androidx.room.RoomDatabase
     entities = [
         User::class,
         Profile::class,
-        QuestionAnswer::class
+        QuestionAnswer::class,
+        QuizSession::class,
+        QuizItem::class,
+        Friend::class
     ],
-    version = 3,
+    version = 8,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -21,6 +24,12 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun profileDao(): ProfileDao
 
     abstract fun questionAnswerDao(): QuestionAnswerDao
+
+    abstract fun quizSessionDao(): QuizSessionDao
+
+    abstract fun quizItemDao(): QuizItemDao
+
+    abstract fun friendDao(): FriendDao
 
     companion object {
 

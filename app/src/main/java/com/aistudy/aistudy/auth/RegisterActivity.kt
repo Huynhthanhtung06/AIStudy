@@ -75,7 +75,7 @@ class RegisterActivity : AppCompatActivity() {
         val user = User()
         user.fullName = fullName
         user.email = email
-        user.password = password
+        user.password = PasswordHasher.hash(password)
 
         try {
             val userId = userDao.insert(user)
