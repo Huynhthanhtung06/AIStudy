@@ -34,4 +34,7 @@ interface QuestionAnswerDao {
 
     @Query("SELECT COUNT(*) FROM question_answers WHERE userId = :userId AND subject = :subject")
     fun countBySubject(userId: Long, subject: String): Int
+
+    @Query("SELECT * FROM question_answers WHERE userId = :userId AND subject = :subject ORDER BY createdAt DESC LIMIT :limit")
+    fun getRecentByUserIdAndSubject(userId: Long, subject: String, limit: Int): List<QuestionAnswer>
 }

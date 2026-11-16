@@ -25,8 +25,7 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.aistudy.aistudy.BuildConfig
 import com.aistudy.aistudy.R
-import com.aistudy.aistudy.answer.
-\AnswerActivity
+import com.aistudy.aistudy.answer.AnswerActivity
 import com.aistudy.aistudy.auth.LoginActivity
 import com.aistudy.aistudy.database.AppDatabase
 import com.aistudy.aistudy.database.QuestionAnswer

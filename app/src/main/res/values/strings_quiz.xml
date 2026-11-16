@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quiz_title">Practice Quiz</string>
+    <string name="quiz_practice">Practice</string>
+    <string name="quiz_practice_on">Practice on %1$s</string>
+    <string name="quiz_back">Back</string>
+    <string name="quiz_loading">Generating practice questions…</string>
+    <string name="quiz_need_more">Ask at least 2 questions in this subject before practice.</string>
+    <string name="quiz_no_api_key">GEMINI_API_KEY not set in local.properties</string>
+    <string name="quiz_error">Could not generate quiz. Try again.</string>
+    <string name="quiz_progress">Question %1$d of %2$d</string>
+    <string name="quiz_type_mcq">Multiple choice</string>
+    <string name="quiz_type_short">Short answer</string>
+    <string name="quiz_type_blank">Fill in the blank</string>
+    <string name="quiz_hint_answer">Your answer</string>
+    <string name="quiz_check">Check answer</string>
+    <string name="quiz_next">Next</string>
+    <string name="quiz_finish">See results</string>
+    <string name="quiz_correct">Correct!</string>
+    <string name="quiz_incorrect">Incorrect</string>
+    <string name="quiz_explanation_label">Explanation</string>
+    <string name="quiz_correct_answer_label">Correct answer: %1$s</string>
+    <string name="quiz_result_title">Quiz complete</string>
+    <string name="quiz_result_score">Score: %1$d / %2$d</string>
+    <string name="quiz_result_xp">+%1$d XP</string>
+    <string name="quiz_done">Done</string>
+    <string name="quiz_select_option">Select an option first.</string>
+    <string name="quiz_enter_answer">Enter your answer first.</string>
+</resources>

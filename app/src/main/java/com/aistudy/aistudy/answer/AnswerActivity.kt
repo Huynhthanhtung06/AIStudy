@@ -1,5 +1,6 @@
 package com.aistudy.aistudy.answer
 
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Typeface
 import android.os.Bundle
@@ -24,6 +25,7 @@ import com.aistudy.aistudy.database.AppDatabase
 import com.aistudy.aistudy.database.ProfileDao
 import com.aistudy.aistudy.database.QuestionAnswer
 import com.aistudy.aistudy.database.QuestionAnswerDao
+import com.aistudy.aistudy.quiz.QuizActivity
 import com.google.android.material.button.MaterialButton
 import org.json.JSONArray
 import org.json.JSONObject
@@ -108,6 +110,7 @@ class AnswerActivity : AppCompatActivity() {
         val tvQuestion = findViewById<TextView>(R.id.tv_question)
         val layoutSteps = findViewById<LinearLayout>(R.id.layout_steps)
         val tvFinalAnswer = findViewById<TextView>(R.id.tv_final_answer)
+        val btnPractice = findViewById<MaterialButton>(R.id.btn_practice)
         tvDifficulty = findViewById(R.id.tv_difficulty)
         btnSimplify = findViewById(R.id.btn_simplify)
         btnAlternative = findViewById(R.id.btn_alternative)
@@ -123,6 +126,13 @@ class AnswerActivity : AppCompatActivity() {
         tvQuestion.text = item.question
         tvFinalAnswer.text = item.finalAnswer
         tvDifficulty.text = difficultyLabel(item.difficulty)
+
+        btnPractice.text = getString(R.string.quiz_practice_on, subjectLabel(item.subject))
+        btnPractice.setOnClickListener {
+            val intent = Intent(this, QuizActivity::class.java)
+            intent.putExtra(QuizActivity.EXTRA_SUBJECT, item.subject)
+            startActivity(intent)
+        }
 
         val layoutAnswerImage = findViewById<LinearLayout>(R.id.layout_answer_image)
         val imgAnswer = findViewById<ImageView>(R.id.img_answer)
