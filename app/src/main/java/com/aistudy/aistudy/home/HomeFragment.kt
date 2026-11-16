@@ -75,7 +75,10 @@ class HomeFragment : Fragment() {
 
         val db = AppDatabase.getInstance(requireContext())
         val user = db.userDao().getById(userId)
-        val profile = db.profileDao().getByUserId(userId)
+        val profile = db.
+
+
+        profileDao().getByUserId(userId)
 
         val fullName = user?.fullName ?: ""
         val xp = profile?.xp ?: 0
