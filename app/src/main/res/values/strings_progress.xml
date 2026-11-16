@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="progress_title">Learning progress</string>
+    <string name="progress_logout">Log out</string>
     <string name="progress_xp_label">Total XP</string>
     <string name="progress_level_scholar">Level %1$d • Scholar</string>
     <string name="progress_xp_percent">%d%%</string>
