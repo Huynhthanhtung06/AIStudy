@@ -1,11 +1,13 @@
 package com.aistudy.aistudy.answer
 
+import android.graphics.BitmapFactory
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -25,6 +27,7 @@ import com.aistudy.aistudy.database.QuestionAnswerDao
 import com.google.android.material.button.MaterialButton
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.File
 import java.util.Calendar
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -120,6 +123,17 @@ class AnswerActivity : AppCompatActivity() {
         tvQuestion.text = item.question
         tvFinalAnswer.text = item.finalAnswer
         tvDifficulty.text = difficultyLabel(item.difficulty)
+
+        val layoutAnswerImage = findViewById<LinearLayout>(R.id.layout_answer_image)
+        val imgAnswer = findViewById<ImageView>(R.id.img_answer)
+        val imagePath = item.imagePath
+        if (!imagePath.isNullOrEmpty()) {
+            val imageFile = File(imagePath)
+            if (imageFile.exists()) {
+                imgAnswer.setImageBitmap(BitmapFactory.decodeFile(imageFile.absolutePath))
+                layoutAnswerImage.visibility = View.VISIBLE
+            }
+        }
 
         try {
             val steps = JSONArray(item.steps)

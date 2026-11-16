@@ -5,9 +5,9 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStreamReader
-import java.io.OutputStreamWriter
 import java.net.HttpURLConnection
 import java.net.URL
+import java.nio.charset.StandardCharsets
 
 object GeminiClient {
 
@@ -15,71 +15,86 @@ object GeminiClient {
     private const val MODEL = "gemini-3.5-flash"
 
     fun ask(apiKey: String, prompt: String): String {
+        return ask(apiKey, prompt, null, null)
+    }
+
+    fun ask(apiKey: String, prompt: String, imageBase64: String?, mimeType: String?): String {
+        val hasImage = !imageBase64.isNullOrEmpty()
+        Log.d(TAG, "request start model=$MODEL promptLength=${prompt.length} hasImage=$hasImage")
         val urlString = "https://generativelanguage.googleapis.com/v1beta/models/$MODEL:generateContent?key=$apiKey"
         val url = URL(urlString)
         val conn = url.openConnection() as HttpURLConnection
+        conn.requestMethod = "POST"
+        conn.setRequestProperty("Content-Type", "application/json")
+        conn.doOutput = true
+        conn.connectTimeout = 30000
+        conn.readTimeout = 90000
 
-        try {
-            conn.requestMethod = "POST"
-            conn.setRequestProperty("Content-Type", "application/json")
-            conn.connectTimeout = 60000
-            conn.readTimeout = 60000
-            conn.doOutput = true
+        val parts = JSONArray()
 
-            val jsonBody = JSONObject().apply {
-                put("contents", JSONArray().apply {
-                    put(JSONObject().apply {
-                        put("parts", JSONArray().apply {
-                            put(JSONObject().apply {
-                                put("text", prompt)
-                            })
-                        })
-                    })
-                })
-            }
+        val textPart = JSONObject()
+        textPart.put("text", prompt)
+        parts.put(textPart)
 
-            conn.outputStream.use { os ->
-                val writer = OutputStreamWriter(os, "UTF-8")
-                writer.write(jsonBody.toString())
-                writer.flush()
-            }
-
-            val responseCode = conn.responseCode
-            Log.d(TAG, "response httpCode=$responseCode")
-
-            val stream = if (responseCode in 200..299) {
-                conn.inputStream
-            } else {
-                conn.errorStream
-            }
-
-            val responseBody = BufferedReader(InputStreamReader(stream, "UTF-8")).use { br ->
-                val sb = StringBuilder()
-                var line: String?
-                while (br.readLine().also { line = it } != null) {
-                    sb.append(line)
-                }
-                sb.toString()
-            }
-
-            if (responseCode in 200..299) {
-                val jsonResponse = JSONObject(responseBody)
-                val candidates = jsonResponse.getJSONArray("candidates")
-                if (candidates.length() > 0) {
-                    val candidate = candidates.getJSONObject(0)
-                    val content = candidate.getJSONObject("content")
-                    val parts = content.getJSONArray("parts")
-                    if (parts.length() > 0) {
-                        return parts.getJSONObject(0).getString("text")
-                    }
-                }
-                throw Exception("No text content returned from Gemini response")
-            } else {
-                Log.e(TAG, "request failed httpCode=$responseCode: $responseBody")
-                throw Exception("HTTP $responseCode: $responseBody")
-            }
-        } finally {
-            conn.disconnect()
+        if (hasImage) {
+            val mime = if (mimeType.isNullOrEmpty()) "image/jpeg" else mimeType
+            val inlineData = JSONObject()
+            inlineData.put("mime_type", mime)
+            inlineData.put("data", imageBase64)
+            val imagePart = JSONObject()
+            imagePart.put("inline_data", inlineData)
+            parts.put(imagePart)
         }
+
+        val content = JSONObject()
+        content.put("parts", parts)
+
+        val body = JSONObject()
+        body.put("contents", JSONArray().put(content))
+
+        val bytes = body.toString().toByteArray(StandardCharsets.UTF_8)
+        Log.d(TAG, "request body bytes=${bytes.size}")
+        conn.outputStream.use { os ->
+            os.write(bytes)
+        }
+
+        val code = conn.responseCode
+        Log.d(TAG, "response httpCode=$code")
+        val reader = if (code in 200..299) {
+            BufferedReader(InputStreamReader(conn.inputStream, StandardCharsets.UTF_8))
+        } else {
+            BufferedReader(InputStreamReader(conn.errorStream, StandardCharsets.UTF_8))
+        }
+
+        val sb = StringBuilder()
+        var line = reader.readLine()
+        while (line != null) {
+            sb.append(line)
+            line = reader.readLine()
+        }
+        reader.close()
+
+        val responseBody = sb.toString()
+        if (code < 200 || code >= 300) {
+            Log.e(TAG, "request failed httpCode=$code body=${truncate(responseBody, 500)}")
+            throw Exception("HTTP $code: $responseBody")
+        }
+
+        Log.d(TAG, "response body length=${responseBody.length}")
+        val json = JSONObject(responseBody)
+        val text = json.getJSONArray("candidates")
+            .getJSONObject(0)
+            .getJSONObject("content")
+            .getJSONArray("parts")
+            .getJSONObject(0)
+            .getString("text")
+        Log.d(TAG, "parsed text length=${text.length} preview=${truncate(text, 200)}")
+        return text
+    }
+
+    private fun truncate(s: String?, max: Int): String {
+        if (s == null) return "null"
+        if (s.length <= max) return s
+        return s.substring(0, max) + "..."
     }
 }
