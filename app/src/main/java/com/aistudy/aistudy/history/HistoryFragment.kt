@@ -29,6 +29,7 @@ class HistoryFragment : Fragment() {
     private lateinit var chipScience: TextView
     private lateinit var chipCode: TextView
     private lateinit var chipHistory: TextView
+    private lateinit var chipLanguage: TextView
     private lateinit var chipStarred: TextView
     private lateinit var rvHistory: RecyclerView
     private lateinit var tvEmpty: TextView
@@ -143,6 +144,12 @@ class HistoryFragment : Fragment() {
             refreshChips()
             applyFilter()
         }
+        chipLanguage.setOnClickListener {
+            subjectFilter = "language"
+            starredOnly = false
+            refreshChips()
+            applyFilter()
+        }
         chipStarred.setOnClickListener {
             subjectFilter = "all"
             starredOnly = true
@@ -158,6 +165,7 @@ class HistoryFragment : Fragment() {
         styleChip(chipScience, subjectFilter == "science" && !starredOnly)
         styleChip(chipCode, subjectFilter == "code" && !starredOnly)
         styleChip(chipHistory, subjectFilter == "history" && !starredOnly)
+        styleChip(chipLanguage, subjectFilter == "language" && !starredOnly)
         styleChip(chipStarred, starredOnly)
     }
 

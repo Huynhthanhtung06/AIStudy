@@ -49,6 +49,10 @@ class ProgressFragment : Fragment() {
     private lateinit var tvCountHistory: TextView
     private lateinit var barHistory: ProgressBar
 
+    private lateinit var rowLanguage: LinearLayout
+    private lateinit var tvCountLanguage: TextView
+    private lateinit var barLanguage: ProgressBar
+
     private lateinit var badgeStarter: LinearLayout
     private lateinit var badgeWeek: LinearLayout
     private lateinit var badgeMath: LinearLayout
@@ -91,6 +95,10 @@ class ProgressFragment : Fragment() {
         rowHistory = view.findViewById(R.id.row_history)
         tvCountHistory = view.findViewById(R.id.tv_count_history)
         barHistory = view.findViewById(R.id.bar_history)
+
+        rowLanguage = view.findViewById(R.id.row_language)
+        tvCountLanguage = view.findViewById(R.id.tv_count_language)
+        barLanguage = view.findViewById(R.id.bar_language)
 
         badgeStarter = view.findViewById(R.id.badge_starter)
         badgeWeek = view.findViewById(R.id.badge_week)
@@ -157,7 +165,8 @@ class ProgressFragment : Fragment() {
         val countScience = qaDao.countBySubject(userId, "science")
         val countCode = qaDao.countBySubject(userId, "code")
         val countHistory = qaDao.countBySubject(userId, "history")
-        val subjectTotal = countMath + countScience + countCode + countHistory
+        val countLanguage = qaDao.countBySubject(userId, "language")
+        val subjectTotal = countMath + countScience + countCode + countHistory + countLanguage
 
         tvSubjectsEmpty.visibility = if (subjectTotal == 0) View.VISIBLE else View.GONE
 
@@ -166,6 +175,7 @@ class ProgressFragment : Fragment() {
         bindSubjectRow(rowScience, tvCountScience, barScience, countScience, barDenom)
         bindSubjectRow(rowCode, tvCountCode, barCode, countCode, barDenom)
         bindSubjectRow(rowHistory, tvCountHistory, barHistory, countHistory, barDenom)
+        bindSubjectRow(rowLanguage, tvCountLanguage, barLanguage, countLanguage, barDenom)
 
         setBadge(badgeStarter, totalQuestions >= 1)
         setBadge(badgeWeek, streak >= 7)

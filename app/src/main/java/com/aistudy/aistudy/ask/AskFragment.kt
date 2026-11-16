@@ -116,10 +116,26 @@ class AskFragment : Fragment() {
                 val jsonText = extractJson(rawResponse)
                 val jsonObject = JSONObject(jsonText)
 
-                val subject = jsonObject.optString("subject", "other")
+                var subject = jsonObject.optString("subject", "other")
+                if (!isValidSubject(subject)) {
+                    Log.w(TAG, "invalid subject from AI: $subject, fallback to other")
+                    subject = "other"
+                }
+
+                var difficulty = jsonObject.optString("difficulty", "medium")
+                if (!isValidDifficulty(difficulty)) {
+                    difficulty = "medium"
+                }
+
                 val stepsArray = jsonObject.optJSONArray("steps")
                 val stepsJson = stepsArray?.toString() ?: "[]"
                 val finalAnswer = jsonObject.optString("finalAnswer", "")
+
+                Log.d(
+                    TAG, "parsed subject=$subject difficulty=$difficulty" +
+                        " steps=${stepsArray?.length() ?: 0}" +
+                        " finalAnswerLength=${finalAnswer.length}"
+                )
 
                 val db = AppDatabase.getInstance(context)
                 val qa = QuestionAnswer().apply {
@@ -129,6 +145,9 @@ class AskFragment : Fragment() {
                     this.steps = stepsJson
                     this.finalAnswer = finalAnswer
                     this.createdAt = System.currentTimeMillis()
+                    this.difficulty = difficulty
+                    this.extrasJson = null
+                    this.reviewedAt = 0
                 }
 
                 val qaId = db.questionAnswerDao().insert(qa)
@@ -157,38 +176,46 @@ class AskFragment : Fragment() {
     }
 
     private fun buildPrompt(question: String, level: String, style: String): String {
-        val levelDesc = when (level) {
+        val levelText = when (level) {
             "junior" -> "Middle school level (simple concepts, gentle language)"
             "uni" -> "University level (rigorous proofs, advanced academic terminology)"
             else -> "High school level (standard high school curriculum)"
         }
 
-        val styleDesc = when (style) {
+        val styleText = when (style) {
             "short" -> "Concise and brief, get straight to the point"
             "detailed" -> "Detailed with complete explanations, context, and edge cases"
             else -> "Step by step, breakdown into clear numbered logical steps"
         }
 
-        return """
-            You are an expert AI tutor. Please solve the following question for a student.
-            Target student level: $levelDesc
-            Explanation style: $styleDesc
-            Question: "$question"
+        return "You are AI Study Mentor, a study tutor in English for a $levelText.\n" +
+            styleText + "\n" +
+            "Always answer in English. Put math formulas in the \"expr\" field of the matching step.\n" +
+            "Classify the subject correctly (math/science/code/history/language/other).\n" +
+            "Also rate difficulty as easy, medium, or hard for this student.\n\n" +
+            "Return ONLY valid JSON (no markdown) with this structure:\n" +
+            "{\n" +
+            "  \"subject\": \"math|science|code|history|language|other\",\n" +
+            "  \"difficulty\": \"easy|medium|hard\",\n" +
+            "  \"steps\": [{\"title\": \"optional\", \"body\": \"required\", \"expr\": \"optional\"}],\n" +
+            "  \"finalAnswer\": \"string\"\n" +
+            "}\n\n" +
+            "Question: " + question
+    }
 
-            IMPORTANT: You MUST respond ONLY with a valid JSON object. Do not include markdown code blocks outside JSON or any conversational introductory text.
-            The JSON structure must strictly follow:
-            {
-              "subject": "<one of: math, science, code, history, language, other>",
-              "steps": [
-                {
-                  "title": "<step title>",
-                  "body": "<explanation of step>",
-                  "expr": "<math expression or code if applicable, or empty string>"
-                }
-              ],
-              "finalAnswer": "<summary of final answer or solution>"
-            }
-        """.trimIndent()
+    private fun isValidSubject(subject: String): Boolean {
+        return subject == "math" ||
+            subject == "science" ||
+            subject == "code" ||
+            subject == "history" ||
+            subject == "language" ||
+            subject == "other"
+    }
+
+    private fun isValidDifficulty(difficulty: String): Boolean {
+        return difficulty == "easy" ||
+            difficulty == "medium" ||
+            difficulty == "hard"
     }
 
     private fun extractJson(raw: String): String {
