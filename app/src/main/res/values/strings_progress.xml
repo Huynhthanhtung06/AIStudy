@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="progress_title">Learning progress</string>
+    <string name="progress_xp_label">Total XP</string>
+    <string name="progress_level_scholar">Level %1$d • Scholar</string>
+    <string name="progress_xp_percent">%d%%</string>
+    <string name="progress_next_level">to next level</string>
+    <string name="progress_stat_streak">Streak</string>
+    <string name="progress_stat_questions">Questions</string>
+    <string name="progress_stat_stars">Stars</string>
+    <string name="progress_streak_value">%dd</string>
+    <string name="progress_subjects_title">Subject breakdown</string>
+    <string name="progress_subjects_empty">No data yet — ask your first question!</string>
+    <string name="progress_badges_title">Badges</string>
+    <string name="progress_badge_starter">Starter</string>
+    <string name="progress_badge_week">7-day streak</string>
+    <string name="progress_badge_math">Algebra basics</string>
+    <string name="progress_badge_scholar">Scholar 1k</string>
+</resources>
