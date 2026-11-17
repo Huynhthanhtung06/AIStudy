@@ -17,4 +17,19 @@
     <string name="progress_badge_week">7-day streak</string>
     <string name="progress_badge_math">Algebra basics</string>
     <string name="progress_badge_scholar">Scholar 1k</string>
+    <string name="progress_metrics_title">Learning metrics</string>
+    <string name="progress_quiz_accuracy_label">Quiz accuracy</string>
+    <string name="progress_quiz_accuracy_value">%1$d%% · %2$d/%3$d</string>
+    <string name="progress_quiz_accuracy_empty">No quiz attempts yet</string>
+    <string name="progress_review_time_label">Time reviewing</string>
+    <string name="progress_review_time_seconds">%d sec</string>
+    <string name="progress_review_time_minutes">%d min</string>
+    <string name="progress_review_time_hours">%1$dh %2$dm</string>
+    <string name="progress_insights_title">AI insights</string>
+    <string name="progress_insight_top_subject">You frequently ask questions about %1$s.</string>
+    <string name="progress_insight_accuracy_improved">Your accuracy in %1$s has improved this month.</string>
+    <string name="progress_insights_empty">Ask questions and complete quizzes to unlock insights.</string>
+    <string name="progress_review_title">Suggested review</string>
+    <string name="progress_review_subtitle">Review: %1$s</string>
+    <string name="progress_review_cta">Practice now</string>
 </resources>

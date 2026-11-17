@@ -375,6 +375,7 @@ class AskFragment : Fragment() {
                     this.extrasJson = null
                     this.reviewedAt = 0
                     this.imagePath = imagePath
+                    this.reviewedSeconds = 0
                 }
 
                 val qaId = db.questionAnswerDao().insert(qa)

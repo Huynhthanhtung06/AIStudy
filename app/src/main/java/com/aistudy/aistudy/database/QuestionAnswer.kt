@@ -20,4 +20,5 @@ class QuestionAnswer {
     var extrasJson: String? = null
     var reviewedAt: Long = 0
     var imagePath: String? = null
+    var reviewedSeconds: Int = 0
 }
