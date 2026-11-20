@@ -20,4 +20,8 @@
     <color name="streak">#E67E22</color>
     <color name="streak_soft">#FDF0E4</color>
     <color name="xp_track">#E8EAED</color>
+
+    <color name="theme_default_bg">#F9FAFC</color>
+    <color name="theme_night_bg">#1C1F28</color>
+    <color name="theme_pastel_bg">#F3E8FF</color>
 </resources>

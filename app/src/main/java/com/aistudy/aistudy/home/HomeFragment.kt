@@ -18,14 +18,14 @@ import com.aistudy.aistudy.auth.LoginActivity
 import com.aistudy.aistudy.database.AppDatabase
 import com.aistudy.aistudy.database.QuestionAnswerDao
 import com.aistudy.aistudy.quiz.QuizActivity
+import com.aistudy.aistudy.xp.UnlockCatalog
+import com.aistudy.aistudy.xp.XpRules
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
-import kotlin.math.roundToInt
 
 class HomeFragment : Fragment() {
 
     companion object {
-        private const val XP_MAX = 1200
         private const val MIN_PRACTICE_QA = 2
     }
 
@@ -143,15 +143,22 @@ class HomeFragment : Fragment() {
         val fullName = user?.fullName ?: ""
         val xp = profile?.xp ?: 0
         val streak = profile?.streak ?: 0
-        val level = maxOf(1, xp / 100)
-        val xpPct = minOf(100, ((xp * 100f) / XP_MAX).roundToInt())
+        val level = XpRules.levelFromXp(xp)
+        val xpPct = XpRules.progressPercentToNext(xp)
+        val nextXp = XpRules.nextLevelThreshold(xp)
 
         tvLevelBadge.text = level.toString()
         tvStreak.text = getString(R.string.home_streak_days, streak)
-        tvXpLabel.text = getString(R.string.home_xp_progress, xp, XP_MAX)
+        tvXpLabel.text = getString(R.string.home_xp_progress, xp, nextXp)
         tvXpPercent.text = getString(R.string.home_xp_percent, xpPct)
         progressXp.progress = xpPct
         tvGreeting.text = getString(R.string.home_greeting, fullName)
+
+        if (profile != null) {
+            activity?.findViewById<View>(R.id.main)?.setBackgroundResource(
+                UnlockCatalog.backgroundColorRes(UnlockCatalog.normalizeThemeId(profile.themeId))
+            )
+        }
 
         val latest = qaDao.getLatestByUserId(userId)
         if (latest != null) {

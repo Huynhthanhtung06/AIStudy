@@ -26,6 +26,7 @@ import com.aistudy.aistudy.database.ProfileDao
 import com.aistudy.aistudy.database.QuestionAnswer
 import com.aistudy.aistudy.database.QuestionAnswerDao
 import com.aistudy.aistudy.quiz.QuizActivity
+import com.aistudy.aistudy.xp.XpRules
 import com.google.android.material.button.MaterialButton
 import org.json.JSONArray
 import org.json.JSONObject
@@ -39,7 +40,6 @@ class AnswerActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_QA_ID = "qa_id"
 
-        private const val XP_REVIEW = 10
         private const val KEY_SIMPLIFY = "simplify"
         private const val KEY_ALTERNATIVE = "alternative"
         private const val KEY_CONCEPTS = "concepts"
@@ -225,8 +225,7 @@ class AnswerActivity : AppCompatActivity() {
         if (firstReview) {
             val profile = profileDao.getByUserId(item.userId)
             if (profile != null) {
-                profile.xp += XP_REVIEW
-                profileDao.update(profile)
+                XpRules.addXp(profile, profileDao, XpRules.REVIEW)
                 Toast.makeText(this, R.string.answer_review_xp_toast, Toast.LENGTH_SHORT).show()
             }
         }

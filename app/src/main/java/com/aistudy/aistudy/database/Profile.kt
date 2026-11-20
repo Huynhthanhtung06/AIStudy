@@ -15,4 +15,9 @@ class Profile {
     var style: String? = null
     var xp: Int = 0
     var streak: Int = 0
+    var avatarId: String? = null
+    var themeId: String? = null
+    var weeklyXp: Int = 0
+    var weekStartMs: Long = 0
+    var lastActiveDay: String? = null
 }
